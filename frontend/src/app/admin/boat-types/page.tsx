@@ -55,7 +55,9 @@ export default function AdminBoatTypesPage() {
         <Link href="/admin/boat-types/create" className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">Create boat type</Link>
       </div>
 
-      {loading ? <p className="text-zinc-400">Loading...</p> : (
+      {loading ? <p className="text-zinc-400">Loading...</p> : items.length === 0 ? (
+        <p className="py-12 text-center text-zinc-500">No boat types found.</p>
+      ) : (
         <>
           <div className="overflow-hidden rounded border border-zinc-200">
             <table className="min-w-full divide-y divide-zinc-200 text-sm">

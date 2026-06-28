@@ -68,15 +68,15 @@ export default function BoatReportsPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">Boat Reports</h1>
-      <div className="mb-6 flex gap-4 border-b border-zinc-200">
+      <div role="tablist" aria-label="Report type" className="mb-6 flex gap-4 border-b border-zinc-200">
         {(['daily', 'monthly', 'availability'] as Tab[]).map((t) => (
-          <button key={t} onClick={() => setTab(t)}
+          <button key={t} role="tab" aria-selected={tab === t} aria-controls={`${t}-panel`} onClick={() => setTab(t)}
             className={`pb-2 text-sm font-medium capitalize ${tab === t ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>{t}</button>
         ))}
       </div>
 
       {tab === 'daily' && (
-        <div>
+        <div role="tabpanel" id="daily-panel" aria-label="Daily report">
           <div className="mb-4 flex gap-3 items-end">
             <div><label className="block text-xs font-medium mb-1">From</label><input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="rounded border border-zinc-300 px-3 py-2 text-sm" /></div>
             <div><label className="block text-xs font-medium mb-1">To</label><input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="rounded border border-zinc-300 px-3 py-2 text-sm" /></div>
@@ -87,7 +87,7 @@ export default function BoatReportsPage() {
       )}
 
       {tab === 'monthly' && (
-        <div>
+        <div role="tabpanel" id="monthly-panel" aria-label="Monthly report">
           <div className="mb-4 flex gap-3 items-end">
             <div><label className="block text-xs font-medium mb-1">Year</label><input type="number" value={year} onChange={(e) => setYear(e.target.value)} className="rounded border border-zinc-300 px-3 py-2 text-sm w-24" /></div>
             <button onClick={loadMonthly} className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">Load</button>
@@ -97,7 +97,7 @@ export default function BoatReportsPage() {
       )}
 
       {tab === 'availability' && (
-        <div>
+        <div role="tabpanel" id="availability-panel" aria-label="Availability report">
           <div className="mb-4 flex gap-3 items-end">
             <div><label className="block text-xs font-medium mb-1">From</label><input type="date" value={availFrom} onChange={(e) => setAvailFrom(e.target.value)} className="rounded border border-zinc-300 px-3 py-2 text-sm" /></div>
             <div><label className="block text-xs font-medium mb-1">To</label><input type="date" value={availTo} onChange={(e) => setAvailTo(e.target.value)} className="rounded border border-zinc-300 px-3 py-2 text-sm" /></div>

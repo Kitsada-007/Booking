@@ -121,51 +121,51 @@ export default function AdminSettingsPage() {
         <form onSubmit={saveSettings} className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium">Resort name</label>
-              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+              <label htmlFor="resortName" className="block text-sm font-medium">Resort name</label>
+              <input id="resortName" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
             </div>
             <div>
-              <label className="block text-sm font-medium">Phone</label>
-              <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+              <label htmlFor="resortPhone" className="block text-sm font-medium">Phone</label>
+              <input id="resortPhone" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium">Address</label>
-            <input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            <label htmlFor="resortAddress" className="block text-sm font-medium">Address</label>
+            <input id="resortAddress" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium">Latitude</label>
-              <input type="number" step="any" value={form.latitude} onChange={(e) => setForm({ ...form, latitude: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" placeholder="e.g. 13.7367" />
+              <label htmlFor="latitude" className="block text-sm font-medium">Latitude</label>
+              <input id="latitude" type="number" step="any" value={form.latitude} onChange={(e) => setForm({ ...form, latitude: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" placeholder="e.g. 13.7367" />
             </div>
             <div>
-              <label className="block text-sm font-medium">Longitude</label>
-              <input type="number" step="any" value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" placeholder="e.g. 100.5232" />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm font-medium">Email</label>
-              <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium">Business hours</label>
-              <input value={form.businessHours} onChange={(e) => setForm({ ...form, businessHours: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+              <label htmlFor="longitude" className="block text-sm font-medium">Longitude</label>
+              <input id="longitude" type="number" step="any" value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" placeholder="e.g. 100.5232" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium">Facebook</label>
-              <input value={form.facebook} onChange={(e) => setForm({ ...form, facebook: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+              <label htmlFor="resortEmail" className="block text-sm font-medium">Email</label>
+              <input id="resortEmail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
             </div>
             <div>
-              <label className="block text-sm font-medium">LINE ID</label>
-              <input value={form.line} onChange={(e) => setForm({ ...form, line: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+              <label htmlFor="businessHours" className="block text-sm font-medium">Business hours</label>
+              <input id="businessHours" value={form.businessHours} onChange={(e) => setForm({ ...form, businessHours: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label htmlFor="resortFacebook" className="block text-sm font-medium">Facebook</label>
+              <input id="resortFacebook" value={form.facebook} onChange={(e) => setForm({ ...form, facebook: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            </div>
+            <div>
+              <label htmlFor="resortLine" className="block text-sm font-medium">LINE ID</label>
+              <input id="resortLine" value={form.line} onChange={(e) => setForm({ ...form, line: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium">Terms & conditions</label>
-            <textarea rows={3} value={form.terms} onChange={(e) => setForm({ ...form, terms: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            <label htmlFor="terms" className="block text-sm font-medium">Terms & conditions</label>
+            <textarea id="terms" rows={3} value={form.terms} onChange={(e) => setForm({ ...form, terms: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <button type="submit" disabled={saving} className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50">
             {saving ? 'Saving...' : 'Save settings'}
@@ -188,9 +188,9 @@ export default function AdminSettingsPage() {
           {accounts.length === 0 && <p className="text-sm text-zinc-400">No bank accounts configured.</p>}
         </div>
         <form onSubmit={addBank} className="flex gap-2">
-          <input placeholder="Bank name" value={newBank.bankName} onChange={(e) => setNewBank({ ...newBank, bankName: e.target.value })} className="block w-1/4 rounded border border-zinc-300 px-3 py-2 text-sm" required />
-          <input placeholder="Account name" value={newBank.accountName} onChange={(e) => setNewBank({ ...newBank, accountName: e.target.value })} className="block w-1/3 rounded border border-zinc-300 px-3 py-2 text-sm" required />
-          <input placeholder="Account number" value={newBank.accountNumber} onChange={(e) => setNewBank({ ...newBank, accountNumber: e.target.value })} className="block w-1/4 rounded border border-zinc-300 px-3 py-2 text-sm" required />
+          <input aria-label="Bank name" placeholder="Bank name" value={newBank.bankName} onChange={(e) => setNewBank({ ...newBank, bankName: e.target.value })} className="block w-1/4 rounded border border-zinc-300 px-3 py-2 text-sm" required />
+          <input aria-label="Account name" placeholder="Account name" value={newBank.accountName} onChange={(e) => setNewBank({ ...newBank, accountName: e.target.value })} className="block w-1/3 rounded border border-zinc-300 px-3 py-2 text-sm" required />
+          <input aria-label="Account number" placeholder="Account number" value={newBank.accountNumber} onChange={(e) => setNewBank({ ...newBank, accountNumber: e.target.value })} className="block w-1/4 rounded border border-zinc-300 px-3 py-2 text-sm" required />
           <button type="submit" className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">Add</button>
         </form>
       </section>

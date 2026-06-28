@@ -34,15 +34,17 @@ export default function BoatsPage() {
   const [boatTypes, setBoatTypes] = useState<BoatType[]>([]);
   const [date, setDate] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const load = async () => {
+      setError('');
       const params = new URLSearchParams();
       if (date) params.set('date', date);
       try {
         const result = await apiClient.get<PaginatedResponse>(`/boat-types?${params}`);
         setBoatTypes(result.data);
-      } catch { setBoatTypes([]); }
+      } catch { setError('Failed to load boat tours'); setBoatTypes([]); }
       setLoading(false);
     };
     load();
@@ -54,10 +56,12 @@ export default function BoatsPage() {
       <p className="mb-6 text-zinc-500">Explore our fleet and book your ride</p>
 
       <div className="mb-8">
-        <label className="block text-sm font-medium mb-1">Check availability</label>
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
+        <label htmlFor="boatDateFilter" className="block text-sm font-medium mb-1">Check availability</label>
+        <input id="boatDateFilter" type="date" value={date} onChange={(e) => setDate(e.target.value)}
           className="rounded border border-zinc-300 px-3 py-2 text-sm" />
       </div>
+
+      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
 
       {loading ? <p className="text-zinc-400">Loading...</p> : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

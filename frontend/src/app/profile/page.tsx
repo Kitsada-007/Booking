@@ -112,44 +112,44 @@ export default function ProfilePage() {
       <form onSubmit={handleSave} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium">First name</label>
-            <input type="text" required value={firstName} onChange={(e) => setFirstName(e.target.value)}
+            <label htmlFor="firstName" className="block text-sm font-medium">First name</label>
+            <input id="firstName" type="text" required value={firstName} onChange={(e) => setFirstName(e.target.value)}
               className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Last name</label>
-            <input type="text" required value={lastName} onChange={(e) => setLastName(e.target.value)}
+            <label htmlFor="lastName" className="block text-sm font-medium">Last name</label>
+            <input id="lastName" type="text" required value={lastName} onChange={(e) => setLastName(e.target.value)}
               className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Email</label>
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+          <label htmlFor="profileEmail" className="block text-sm font-medium">Email</label>
+          <input id="profileEmail" type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Phone</label>
-          <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}
+          <label htmlFor="profilePhone" className="block text-sm font-medium">Phone</label>
+          <input id="profilePhone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Address</label>
-          <textarea value={address} onChange={(e) => setAddress(e.target.value)} rows={2}
+          <label htmlFor="profileAddress" className="block text-sm font-medium">Address</label>
+          <textarea id="profileAddress" value={address} onChange={(e) => setAddress(e.target.value)} rows={2}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium">LINE ID</label>
-            <input type="text" value={lineId} onChange={(e) => setLineId(e.target.value)}
+            <label htmlFor="lineId" className="block text-sm font-medium">LINE ID</label>
+            <input id="lineId" type="text" value={lineId} onChange={(e) => setLineId(e.target.value)}
               className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Facebook</label>
-            <input type="text" value={facebook} onChange={(e) => setFacebook(e.target.value)}
+            <label htmlFor="facebook" className="block text-sm font-medium">Facebook</label>
+            <input id="facebook" type="text" value={facebook} onChange={(e) => setFacebook(e.target.value)}
               className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
         </div>
@@ -165,18 +165,18 @@ export default function ProfilePage() {
       <h2 className="text-lg font-bold mb-4">Change Password</h2>
       <form onSubmit={handleChangePassword} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium">Current password</label>
-          <input type="password" required value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}
+          <label htmlFor="currentPassword" className="block text-sm font-medium">Current password</label>
+          <input id="currentPassword" type="password" required value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="block text-sm font-medium">New password</label>
-          <input type="password" required minLength={8} value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
+          <label htmlFor="newPassword" className="block text-sm font-medium">New password</label>
+          <input id="newPassword" type="password" required minLength={8} value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
         <div>
-          <label className="block text-sm font-medium">Confirm new password</label>
-          <input type="password" required minLength={8} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+          <label htmlFor="confirmPassword" className="block text-sm font-medium">Confirm new password</label>
+          <input id="confirmPassword" type="password" required minLength={8} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
         <button type="submit" disabled={savingPassword}

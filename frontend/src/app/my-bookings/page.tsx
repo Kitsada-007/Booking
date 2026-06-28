@@ -67,11 +67,12 @@ export default function MyBookingsPage() {
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">My Bookings</h1>
 
-      <div className="mb-6 flex gap-4 border-b border-zinc-200">
-        <button onClick={() => setTab('room')} className={`pb-2 text-sm font-medium ${tab === 'room' ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>Rooms</button>
-        <button onClick={() => setTab('boat')} className={`pb-2 text-sm font-medium ${tab === 'boat' ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>Boats</button>
+      <div role="tablist" aria-label="Booking type" className="mb-6 flex gap-4 border-b border-zinc-200">
+        <button role="tab" aria-selected={tab === 'room'} aria-controls="room-bookings-panel" onClick={() => setTab('room')} className={`pb-2 text-sm font-medium ${tab === 'room' ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>Rooms</button>
+        <button role="tab" aria-selected={tab === 'boat'} aria-controls="boat-bookings-panel" onClick={() => setTab('boat')} className={`pb-2 text-sm font-medium ${tab === 'boat' ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>Boats</button>
       </div>
 
+      <div role="tabpanel" id={`${tab}-bookings-panel`} aria-label={`${tab} bookings`}>
       {loading ? <p className="text-zinc-400">Loading...</p> : bookings.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-zinc-500 mb-4">No {tab} bookings yet</p>
@@ -129,6 +130,7 @@ export default function MyBookingsPage() {
           ))}
         </div>
       )}
+      </div>
     </div>
   );
 }

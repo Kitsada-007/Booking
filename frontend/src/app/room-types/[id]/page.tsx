@@ -28,6 +28,7 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
   const [reviewSummary, setReviewSummary] = useState({ averageRating: 0, totalReviews: 0 });
   const [loading, setLoading] = useState(true);
   const [loadingReviews, setLoadingReviews] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -42,7 +43,7 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
           setReviews(revData.data);
           setReviewSummary(revData.summary);
         }
-      } catch { /* ignore */ }
+      } catch { setError('Failed to load room details'); }
       try {
         const s = await apiClient.get<{ latitude?: number; longitude?: number }>('/settings');
         if (s.latitude && s.longitude) setMapCoords({ lat: s.latitude, lng: s.longitude });

@@ -68,6 +68,8 @@ export default function AdminRoomsPage() {
 
       {loading ? (
         <p className="text-zinc-400">Loading...</p>
+      ) : rooms.length === 0 ? (
+        <p className="py-12 text-center text-zinc-500">No rooms found.</p>
       ) : (
         <div className="overflow-hidden rounded border border-zinc-200">
           <table className="min-w-full divide-y divide-zinc-200 text-sm">

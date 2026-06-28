@@ -34,6 +34,7 @@ export default function BoatDetailPage() {
   const [boatType, setBoatType] = useState<BoatType | null>(null);
   const [date, setDate] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [mapCoords, setMapCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function BoatDetailPage() {
       try {
         const result = await apiClient.get<BoatType>(`/boat-types/${id}?${params}`);
         setBoatType(result);
-      } catch { setBoatType(null); }
+      } catch { setError('Failed to load boat details'); setBoatType(null); }
       try {
         const s = await apiClient.get<{ latitude?: number; longitude?: number }>('/settings');
         if (s.latitude && s.longitude) setMapCoords({ lat: s.latitude, lng: s.longitude });
@@ -55,6 +56,7 @@ export default function BoatDetailPage() {
   }, [id, date]);
 
   if (loading) return <div className="mx-auto max-w-4xl px-4 py-16 text-center text-zinc-400">Loading...</div>;
+  if (error) return <div className="mx-auto max-w-4xl px-4 py-16 text-center"><p className="text-red-600">{error}</p><Link href="/boats" className="mt-4 inline-block text-sm text-zinc-600 hover:text-zinc-900">&larr; Back to boats</Link></div>;
   if (!boatType) return <div className="mx-auto max-w-4xl px-4 py-16 text-center text-zinc-500">Boat type not found</div>;
 
   return (
@@ -86,8 +88,8 @@ export default function BoatDetailPage() {
           {boatType.description && <p className="mt-4 text-zinc-700">{boatType.description}</p>}
 
           <div className="mt-6">
-            <label className="block text-sm font-medium mb-1">Select date</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)}
+            <label htmlFor="boatDetailDate" className="block text-sm font-medium mb-1">Select date</label>
+            <input id="boatDetailDate" type="date" value={date} onChange={(e) => setDate(e.target.value)}
               className="rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
 

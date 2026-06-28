@@ -126,8 +126,8 @@ function BookBoatForm() {
         {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
 
         <div>
-          <label className="block text-sm font-medium">Boat type</label>
-          <select required value={boatTypeId} onChange={(e) => { setBoatTypeId(e.target.value); setTimeSlotId(''); }} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
+          <label htmlFor="boatTypeId" className="block text-sm font-medium">Boat type</label>
+          <select id="boatTypeId" required value={boatTypeId} onChange={(e) => { setBoatTypeId(e.target.value); setTimeSlotId(''); }} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
             <option value="">Select a boat type</option>
             {boatTypes.map((bt) => (
               <option key={bt.id} value={bt.id}>{bt.name} — ฿{bt.price.toLocaleString()}</option>
@@ -136,14 +136,14 @@ function BookBoatForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Date</label>
-          <input type="date" required value={date} onChange={(e) => { setDate(e.target.value); setTimeSlotId(''); }}
+          <label htmlFor="boatDate" className="block text-sm font-medium">Date</label>
+          <input id="boatDate" type="date" required value={date} onChange={(e) => { setDate(e.target.value); setTimeSlotId(''); }}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Time slot</label>
-          <select required value={timeSlotId} onChange={(e) => setTimeSlotId(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
+          <label htmlFor="timeSlotId" className="block text-sm font-medium">Time slot</label>
+          <select id="timeSlotId" required value={timeSlotId} onChange={(e) => setTimeSlotId(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
             <option value="">Select a time slot</option>
             {selectedBoatType?.timeSlots?.filter((ts) => ts.available > 0).map((ts) => (
               <option key={ts.id} value={ts.id}>{ts.startTime} — {ts.endTime} ({ts.available} spots)</option>
@@ -156,20 +156,20 @@ function BookBoatForm() {
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium">Boats</label>
-            <input type="number" required min={1} value={boatCount} onChange={(e) => setBoatCount(e.target.value)}
+            <label htmlFor="boatCount" className="block text-sm font-medium">Boats</label>
+            <input id="boatCount" type="number" required min={1} value={boatCount} onChange={(e) => setBoatCount(e.target.value)}
               className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Guests</label>
-            <input type="number" required min={1} value={guestCount} onChange={(e) => setGuestCount(e.target.value)}
+            <label htmlFor="boatGuestCount" className="block text-sm font-medium">Guests</label>
+            <input id="boatGuestCount" type="number" required min={1} value={guestCount} onChange={(e) => setGuestCount(e.target.value)}
               className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Payment method</label>
-          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as 'gateway' | 'bank_transfer')}
+          <label htmlFor="boatPaymentMethod" className="block text-sm font-medium">Payment method</label>
+          <select id="boatPaymentMethod" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as 'gateway' | 'bank_transfer')}
             className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
             <option value="gateway">Credit Card (Gateway)</option>
             <option value="bank_transfer">Bank Transfer</option>

@@ -69,6 +69,8 @@ export default function AdminRoomTypesPage() {
 
       {loading ? (
         <p className="text-zinc-400">Loading...</p>
+      ) : roomTypes.length === 0 ? (
+        <p className="py-12 text-center text-zinc-500">No room types found.</p>
       ) : (
         <>
           <div className="overflow-hidden rounded border border-zinc-200">

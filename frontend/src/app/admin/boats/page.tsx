@@ -35,7 +35,9 @@ export default function AdminBoatsPage() {
         <h1 className="text-2xl font-bold">Boats</h1>
         <Link href="/admin/boats/create" className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">Create boat</Link>
       </div>
-      {loading ? <p className="text-zinc-400">Loading...</p> : (
+      {loading ? <p className="text-zinc-400">Loading...</p> : boats.length === 0 ? (
+        <p className="py-12 text-center text-zinc-500">No boats found.</p>
+      ) : (
         <div className="overflow-hidden rounded border border-zinc-200">
           <table className="min-w-full divide-y divide-zinc-200 text-sm">
             <thead className="bg-zinc-50">

@@ -115,8 +115,8 @@ function BookForm() {
         {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
 
         <div>
-          <label className="block text-sm font-medium">Room type</label>
-          <select required value={roomTypeId} onChange={(e) => setRoomTypeId(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
+          <label htmlFor="roomTypeId" className="block text-sm font-medium">Room type</label>
+          <select id="roomTypeId" required value={roomTypeId} onChange={(e) => setRoomTypeId(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
             <option value="">Select a room type</option>
             {roomTypes.map((rt) => (
               <option key={rt.id} value={rt.id}>{rt.name} — ฿{rt.price.toLocaleString()}/night</option>
@@ -126,29 +126,29 @@ function BookForm() {
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium">Check-in</label>
-            <input type="date" required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            <label htmlFor="checkIn" className="block text-sm font-medium">Check-in</label>
+            <input id="checkIn" type="date" required value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Check-out</label>
-            <input type="date" required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            <label htmlFor="checkOut" className="block text-sm font-medium">Check-out</label>
+            <input id="checkOut" type="date" required value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium">Rooms</label>
-            <input type="number" required min={1} value={quantity} onChange={(e) => setQuantity(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            <label htmlFor="quantity" className="block text-sm font-medium">Rooms</label>
+            <input id="quantity" type="number" required min={1} value={quantity} onChange={(e) => setQuantity(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
           <div>
-            <label className="block text-sm font-medium">Guests</label>
-            <input type="number" required min={1} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+            <label htmlFor="guestCount" className="block text-sm font-medium">Guests</label>
+            <input id="guestCount" type="number" required min={1} value={guestCount} onChange={(e) => setGuestCount(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Payment method</label>
-          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as 'gateway' | 'bank_transfer')} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
+          <label htmlFor="paymentMethod" className="block text-sm font-medium">Payment method</label>
+          <select id="paymentMethod" value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value as 'gateway' | 'bank_transfer')} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm">
             <option value="gateway">Credit Card (Gateway)</option>
             <option value="bank_transfer">Bank Transfer</option>
           </select>

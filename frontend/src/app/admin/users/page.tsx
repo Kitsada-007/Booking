@@ -87,6 +87,8 @@ export default function AdminUsersPage() {
 
       {loading ? (
         <p className="text-zinc-400">Loading...</p>
+      ) : users.length === 0 ? (
+        <p className="py-12 text-center text-zinc-500">No users found.</p>
       ) : (
         <>
           <div className="overflow-hidden rounded border border-zinc-200">

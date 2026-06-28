@@ -18,13 +18,14 @@ interface PackageItem {
 export default function PackagesPage() {
   const [packages, setPackages] = useState<PackageItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
         const result = await apiClient.get<{ data: PackageItem[] }>('/packages?activeOnly=true');
         setPackages(result.data);
-      } catch { setPackages([]); }
+      } catch { setError('Failed to load packages'); setPackages([]); }
       setLoading(false);
     })();
   }, []);
@@ -33,6 +34,8 @@ export default function PackagesPage() {
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-3xl font-bold mb-2">Room Packages</h1>
       <p className="mb-8 text-zinc-500">Special deals bundling rooms and boat passes</p>
+
+      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
 
       {loading ? <p className="text-zinc-400">Loading...</p> : packages.length === 0 ? (
         <p className="text-zinc-500">No packages available.</p>

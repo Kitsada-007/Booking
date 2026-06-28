@@ -29,15 +29,17 @@ export default function RoomTypesPage() {
   const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
   const [checkIn, setCheckIn] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const load = async () => {
+      setError('');
       const params = new URLSearchParams();
       if (checkIn) params.set('checkIn', checkIn);
       try {
         const result = await apiClient.get<PaginatedResponse>(`/room-types?${params}`);
         setRoomTypes(result.data);
-      } catch { setRoomTypes([]); }
+      } catch { setError('Failed to load rooms'); setRoomTypes([]); }
       setLoading(false);
     };
     load();
@@ -49,12 +51,16 @@ export default function RoomTypesPage() {
       <p className="mb-6 text-zinc-500">Choose your perfect stay</p>
 
       <div className="mb-8">
-        <label className="block text-sm font-medium mb-1">Check availability</label>
-        <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)}
+        <label htmlFor="roomDateFilter" className="block text-sm font-medium mb-1">Check availability</label>
+        <input id="roomDateFilter" type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)}
           className="rounded border border-zinc-300 px-3 py-2 text-sm" />
       </div>
 
-      {loading ? <p className="text-zinc-400">Loading...</p> : (
+      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+
+      {loading ? <p className="text-zinc-400">Loading...</p> : roomTypes.length === 0 ? (
+        <p className="text-zinc-500">No rooms available.</p>
+      ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {roomTypes.map((rt) => (
             <Link key={rt.id} href={`/room-types/${rt.id}`} className="group block rounded border border-zinc-200 p-5 hover:border-zinc-400 transition">
