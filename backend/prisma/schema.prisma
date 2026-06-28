@@ -1,0 +1,270 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  admin
+  room_staff
+  boat_staff
+  member
+}
+
+enum BookingStatus {
+  pending_payment
+  confirmed
+  checked_in
+  cancelled
+  completed
+}
+
+enum PaymentMethod {
+  gateway
+  bank_transfer
+}
+
+enum PaymentStatus {
+  pending
+  verified
+  rejected
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String?
+  googleId      String?  @unique
+  firstName     String
+  lastName      String
+  phone         String?  @unique
+  address       String?
+  profileImage  String?
+  role          UserRole @default(member)
+  status        String   @default("active")
+  lineId        String?
+  facebook      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  roomBookings  RoomBooking[]
+  boatBookings  BoatBooking[]
+  reviews       Review[]
+
+  @@map("users")
+}
+
+model RoomType {
+  id          String   @id @default(cuid())
+  name        String
+  price       Float
+  capacity    Int
+  bedSize     String?
+  bedCount    Int      @default(1)
+  hasAircon   Boolean  @default(true)
+  hasTv       Boolean  @default(true)
+  description String?
+  images      String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  rooms      Room[]
+  bookings   RoomBooking[]
+  packages   Package[]
+  reviews    Review[]
+
+  @@map("room_types")
+}
+
+model Room {
+  id          String  @id @default(cuid())
+  roomNumber  String
+  roomTypeId  String
+  status      String  @default("available")
+  description String?
+
+  roomType RoomType @relation(fields: [roomTypeId], references: [id])
+
+  @@unique([roomNumber, roomTypeId])
+  @@map("rooms")
+}
+
+model BoatType {
+  id              String   @id @default(cuid())
+  name            String
+  capacity        Int
+  seats           Int
+  price           Float
+  durationMinutes Int
+  images          String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  boats      Boat[]
+  timeSlots  TimeSlot[]
+  bookings   BoatBooking[]
+
+  @@map("boat_types")
+}
+
+model Boat {
+  id         String @id @default(cuid())
+  boatNumber String
+  boatTypeId String
+
+  boatType BoatType @relation(fields: [boatTypeId], references: [id])
+
+  @@unique([boatNumber, boatTypeId])
+  @@map("boats")
+}
+
+model TimeSlot {
+  id           String @id @default(cuid())
+  startTime    String
+  endTime      String
+  maxBookings  Int
+  boatTypeId   String
+
+  boatType    BoatType      @relation(fields: [boatTypeId], references: [id])
+  boatBookings BoatBooking[]
+
+  @@map("time_slots")
+}
+
+model RoomBooking {
+  id          String        @id @default(cuid())
+  userId      String
+  roomTypeId  String
+  checkIn     DateTime
+  checkOut    DateTime
+  quantity    Int           @default(1)
+  guestCount  Int
+  totalPrice  Float
+  status      BookingStatus @default(pending_payment)
+  packageId   String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id])
+  roomType RoomType  @relation(fields: [roomTypeId], references: [id])
+  payment  Payment?
+  package  Package?  @relation(fields: [packageId], references: [id])
+
+  @@map("room_bookings")
+}
+
+model BoatBooking {
+  id         String        @id @default(cuid())
+  userId     String
+  boatTypeId String
+  timeSlotId String
+  date       DateTime
+  boatCount  Int
+  guestCount Int
+  totalPrice Float
+  status     BookingStatus @default(pending_payment)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id])
+  boatType BoatType  @relation(fields: [boatTypeId], references: [id])
+  timeSlot TimeSlot  @relation(fields: [timeSlotId], references: [id])
+  payment  Payment?
+
+  @@map("boat_bookings")
+}
+
+model Payment {
+  id           String        @id @default(cuid())
+  roomBookingId String?      @unique
+  boatBookingId String?      @unique
+  amount       Float
+  method       PaymentMethod
+  status       PaymentStatus @default(pending)
+  slipUrl      String?
+  verifiedBy   String?
+  verifiedAt   DateTime?
+  createdAt    DateTime      @default(now())
+
+  roomBooking RoomBooking? @relation(fields: [roomBookingId], references: [id])
+  boatBooking BoatBooking? @relation(fields: [boatBookingId], references: [id])
+
+  @@map("payments")
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  userId      String
+  roomTypeId  String
+  bookingId   String
+  rating      Int
+  comment     String?
+  staffReply  String?
+  createdAt   DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  roomType RoomType @relation(fields: [roomTypeId], references: [id])
+
+  @@unique([bookingId, userId])
+  @@map("reviews")
+}
+
+model Package {
+  id           String   @id @default(cuid())
+  name         String
+  roomTypeId   String
+  roomQuantity Int      @default(1)
+  price        Float
+  startDate    DateTime
+  endDate      DateTime
+  details      String?
+  isActive     Boolean  @default(true)
+
+  roomType RoomType      @relation(fields: [roomTypeId], references: [id])
+  bookings RoomBooking[]
+
+  @@map("packages")
+}
+
+model BankAccount {
+  id            String  @id @default(cuid())
+  bankName      String
+  accountName   String
+  accountNumber String
+  isActive      Boolean @default(true)
+
+  @@map("bank_accounts")
+}
+
+model Setting {
+  id            String  @id @default("default")
+  name          String?
+  address       String?
+  latitude      Float?
+  longitude     Float?
+  phone         String?
+  email         String?
+  facebook      String?
+  line          String?
+  businessHours String?
+  terms         String?
+  boatOpenTime  String?
+  boatCloseTime String?
+  updatedAt     DateTime @updatedAt
+
+  @@map("settings")
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("otps")
+}
