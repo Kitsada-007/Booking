@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { apiClient } from '@/lib/api-client';
 
 interface RoomType {
@@ -63,7 +64,13 @@ export default function RoomTypesPage() {
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {roomTypes.map((rt) => (
-            <Link key={rt.id} href={`/room-types/${rt.id}`} className="group block rounded border border-zinc-200 p-5 hover:border-zinc-400 transition">
+            <Link key={rt.id} href={`/room-types/${rt.id}`} className="group block overflow-hidden rounded border border-zinc-200 transition hover:border-zinc-400 hover:shadow-sm">
+              {rt.images[0] && (
+                <div className="relative h-44 overflow-hidden">
+                  <Image src={rt.images[0]} alt="" fill className="object-cover transition duration-300 group-hover:scale-105" />
+                </div>
+              )}
+              <div className="p-5">
               <h2 className="text-lg font-semibold group-hover:text-zinc-900">{rt.name}</h2>
               <p className="mt-1 text-2xl font-bold">฿{rt.price.toLocaleString()}</p>
               <p className="mt-1 text-sm text-zinc-500">{rt.capacity} guests · {rt.bedCount}x {rt.bedSize || 'bed'}</p>
@@ -76,6 +83,7 @@ export default function RoomTypesPage() {
                   {rt.availableRooms > 0 ? `${rt.availableRooms} rooms available` : 'Sold out'}
                 </p>
               )}
+            </div>
             </Link>
           ))}
         </div>

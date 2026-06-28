@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { apiClient } from '@/lib/api-client';
 import { MapView } from '@/components/MapView';
 
@@ -60,7 +61,24 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
     <div className="mx-auto max-w-3xl px-4 py-8">
       <Link href="/room-types" className="text-sm text-zinc-500 hover:text-zinc-900">&larr; Back to rooms</Link>
 
-      <h1 className="mt-4 text-3xl font-bold">{roomType.name as string}</h1>
+      {(roomType.images as string[])?.length > 0 && (
+        <div className="mt-4">
+          <div className="relative h-64 overflow-hidden rounded-lg sm:h-80">
+            <Image src={(roomType.images as string[])[0]} alt="" fill className="object-cover" />
+          </div>
+          {(roomType.images as string[]).length > 1 && (
+            <div className="mt-2 flex gap-2">
+              {(roomType.images as string[]).slice(1).map((img, i) => (
+                <div key={i} className="relative h-16 w-24 overflow-hidden rounded">
+                  <Image src={img} alt="" fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      <h1 className="mt-6 text-3xl font-bold">{roomType.name as string}</h1>
       <p className="mt-2 text-3xl font-bold">฿{(roomType.price as number).toLocaleString()}</p>
 
       {reviewSummary.totalReviews > 0 && (

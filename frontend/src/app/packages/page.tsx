@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { apiClient } from '@/lib/api-client';
 
 interface PackageItem {
@@ -44,7 +45,9 @@ export default function PackagesPage() {
           {packages.map((pkg) => (
             <div key={pkg.id} className="rounded border border-zinc-200 p-5">
               {pkg.roomType.images.length > 0 && (
-                <img src={pkg.roomType.images[0]} alt="" className="mb-3 h-40 w-full rounded object-cover" />
+                <div className="relative mb-3 h-40 w-full overflow-hidden rounded">
+                  <Image src={pkg.roomType.images[0]} alt="" fill className="object-cover" />
+                </div>
               )}
               <h2 className="text-lg font-semibold">{pkg.name}</h2>
               <p className="text-sm text-zinc-500 mt-1">{pkg.roomType.name} · {pkg.roomQuantity} room(s)</p>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { apiClient } from '@/lib/api-client';
 import { MapView } from '@/components/MapView';
@@ -66,13 +67,19 @@ export default function BoatDetailPage() {
       <div className="mt-4 grid gap-8 lg:grid-cols-2">
         <div>
           {boatType.images.length > 0 && (
-            <img src={boatType.images[0]} alt={boatType.name} className="w-full rounded-lg object-cover h-64" />
+            <div className="relative h-64 w-full overflow-hidden rounded-lg">
+              <Image src={boatType.images[0]} alt={boatType.name} fill className="object-cover" />
+            </div>
           )}
-          <div className="mt-4 flex gap-2">
-            {boatType.images.slice(1).map((img, i) => (
-              <img key={i} src={img} alt="" className="h-16 w-24 rounded object-cover" />
-            ))}
-          </div>
+          {boatType.images.length > 1 && (
+            <div className="mt-4 flex gap-2">
+              {boatType.images.slice(1).map((img, i) => (
+                <div key={i} className="relative h-16 w-24 overflow-hidden rounded">
+                  <Image src={img} alt="" fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div>

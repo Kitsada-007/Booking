@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { apiClient } from '@/lib/api-client';
 
 interface TimeSlot {
@@ -66,8 +67,14 @@ export default function BoatsPage() {
       {loading ? <p className="text-zinc-400">Loading...</p> : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {boatTypes.map((bt) => (
-            <Link key={bt.id} href={`/boats/${bt.id}`} className="group block rounded border border-zinc-200 p-5 hover:border-zinc-400 transition">
-              <h2 className="text-lg font-semibold group-hover:text-zinc-900">{bt.name}</h2>
+            <Link key={bt.id} href={`/boats/${bt.id}`} className="group block overflow-hidden rounded border border-zinc-200 transition hover:border-zinc-400 hover:shadow-sm">
+              {bt.images[0] && (
+                <div className="relative h-44 overflow-hidden">
+                  <Image src={bt.images[0]} alt="" fill className="object-cover transition duration-300 group-hover:scale-105" />
+                </div>
+              )}
+              <div className="p-5">
+                <h2 className="text-lg font-semibold group-hover:text-zinc-900">{bt.name}</h2>
               <p className="mt-1 text-2xl font-bold">฿{bt.price.toLocaleString()}</p>
               <p className="mt-1 text-sm text-zinc-500">{bt.capacity} guests · {bt.seats} seats · {bt.durationMinutes} min</p>
               {bt.timeSlots && date && (
@@ -79,12 +86,14 @@ export default function BoatsPage() {
                   ))}
                 </div>
               )}
+            </div>
             </Link>
           ))}
           {!loading && boatTypes.length === 0 && (
             <p className="col-span-full text-zinc-500">No boat tours available.</p>
           )}
         </div>
+
       )}
     </div>
   );
