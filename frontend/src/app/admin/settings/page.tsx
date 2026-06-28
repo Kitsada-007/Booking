@@ -113,7 +113,7 @@ export default function AdminSettingsPage() {
     <div className="mx-auto max-w-3xl px-4 py-8 space-y-10">
       <h1 className="text-2xl font-bold">Settings</h1>
 
-      {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+      {error && <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
       {/* Resort Info */}
       <section>
@@ -182,7 +182,7 @@ export default function AdminSettingsPage() {
               <div>
                 <span className="font-medium">{acc.bankName}</span> — {acc.accountName}: {acc.accountNumber}
               </div>
-              <button onClick={() => removeBank(acc.id)} className="text-red-600 hover:text-red-800">Remove</button>
+              <button onClick={() => removeBank(acc.id)} className="text-zinc-500 hover:text-zinc-700">Remove</button>
             </div>
           ))}
           {accounts.length === 0 && <p className="text-sm text-zinc-400">No bank accounts configured.</p>}

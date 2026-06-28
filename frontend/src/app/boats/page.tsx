@@ -61,7 +61,7 @@ export default function BoatsPage() {
           className="rounded border border-zinc-300 px-3 py-2 text-sm" />
       </div>
 
-      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+      {error && <div className="mb-4 rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
       {loading ? <p className="text-zinc-400">Loading...</p> : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -73,7 +73,7 @@ export default function BoatsPage() {
               {bt.timeSlots && date && (
                 <div className="mt-3 space-y-1">
                   {bt.timeSlots.map((ts) => (
-                    <p key={ts.id} className={`text-xs ${ts.available > 0 ? 'text-green-700' : 'text-red-600'}`}>
+                    <p key={ts.id} className={`text-xs ${ts.available > 0 ? 'text-zinc-700' : 'text-zinc-400'}`}>
                       {ts.startTime} — {ts.endTime}: {ts.available > 0 ? `${ts.available} spots` : 'Full'}
                     </p>
                   ))}

@@ -43,8 +43,8 @@ export default function StaffBoatBookingDetailPage(props: DetailPageProps) {
   }
 
   if (loading) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-400">Loading...</div>;
-  if (error) return <div className="mx-auto max-w-3xl px-4 py-8 text-red-600">{error}</div>;
-  if (!booking) return <div className="mx-auto max-w-3xl px-4 py-8 text-red-600">Booking not found</div>;
+  if (error) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-500">{error}</div>;
+  if (!booking) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-500">Booking not found</div>;
 
   const bUser = booking.user as Record<string, unknown> | undefined;
   const bTimeSlot = booking.timeSlot as Record<string, unknown> | undefined;
@@ -84,10 +84,10 @@ export default function StaffBoatBookingDetailPage(props: DetailPageProps) {
             <h2 className="text-sm font-semibold text-zinc-500 mb-3">Payment</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between"><span className="text-zinc-500">Method</span><span className="capitalize font-medium">{String(payment.method).replace('_', ' ')}</span></div>
-              <div className="flex justify-between"><span className="text-zinc-500">Status</span><span className={`font-medium capitalize ${payment.status === 'verified' ? 'text-green-600' : payment.status === 'rejected' ? 'text-red-600' : 'text-yellow-600'}`}>{payment.status as string}</span></div>
+              <div className="flex justify-between"><span className="text-zinc-500">Status</span><span className={`font-medium capitalize ${payment.status === 'verified' ? 'text-zinc-800' : payment.status === 'rejected' ? 'text-zinc-400 line-through' : 'text-zinc-600'}`}>{payment.status as string}</span></div>
               <div className="flex justify-between"><span className="text-zinc-500">Amount</span><span>฿{(payment.amount as number).toLocaleString()}</span></div>
               {!!payment.slipUrl && (
-                <div><span className="text-zinc-500">Slip</span><br /><a href={payment.slipUrl as string} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs">View slip</a></div>
+                <div><span className="text-zinc-500">Slip</span><br /><a href={payment.slipUrl as string} target="_blank" rel="noopener noreferrer" className="text-zinc-700 hover:underline text-xs">View slip</a></div>
               )}
             </div>
           </div>
@@ -97,12 +97,12 @@ export default function StaffBoatBookingDetailPage(props: DetailPageProps) {
       {/* Status actions */}
       <div className="mt-6 flex gap-3">
         {booking.status === 'confirmed' && (
-          <button onClick={() => updateStatus('completed')} className="rounded bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700">
+          <button onClick={() => updateStatus('completed')} className="rounded bg-zinc-700 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-600">
             Mark completed
           </button>
         )}
         {(booking.status === 'pending_payment' || booking.status === 'confirmed') && (
-          <button onClick={() => updateStatus('cancelled')} className="rounded border border-red-300 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+          <button onClick={() => updateStatus('cancelled')} className="rounded border border-zinc-300 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50">
             Cancel booking
           </button>
         )}

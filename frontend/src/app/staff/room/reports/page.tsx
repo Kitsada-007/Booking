@@ -214,7 +214,7 @@ function renderOccupancyTable(data: OccupancyRow[], loading: boolean) {
                 return (
                   <td key={rt} className="py-2 pr-4">
                     {occ ? (
-                      <span className={occ.available === 0 ? 'text-red-600 font-medium' : occ.available < occ.total / 2 ? 'text-yellow-600' : 'text-green-600'}>
+                      <span className={occ.available === 0 ? 'text-zinc-400' : occ.available < occ.total / 2 ? 'text-zinc-500' : 'text-zinc-700'}>
                         {occ.booked}/{occ.total}
                       </span>
                     ) : '-'}

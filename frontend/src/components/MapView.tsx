@@ -12,7 +12,7 @@ export function MapView({ latitude, longitude, label, height = 300 }: { latitude
         loading="lazy"
       />
       {label && (
-        <a href={href} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs text-blue-600 hover:underline">
+        <a href={href} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs text-zinc-700 hover:underline">
           {label}
         </a>
       )}

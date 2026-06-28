@@ -35,7 +35,7 @@ export default function PackagesPage() {
       <h1 className="text-3xl font-bold mb-2">Room Packages</h1>
       <p className="mb-8 text-zinc-500">Special deals bundling rooms and boat passes</p>
 
-      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+      {error && <div className="mb-4 rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
       {loading ? <p className="text-zinc-400">Loading...</p> : packages.length === 0 ? (
         <p className="text-zinc-500">No packages available.</p>

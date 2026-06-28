@@ -56,7 +56,7 @@ export default function RoomTypesPage() {
           className="rounded border border-zinc-300 px-3 py-2 text-sm" />
       </div>
 
-      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+      {error && <div className="mb-4 rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
       {loading ? <p className="text-zinc-400">Loading...</p> : roomTypes.length === 0 ? (
         <p className="text-zinc-500">No rooms available.</p>
@@ -72,7 +72,7 @@ export default function RoomTypesPage() {
                 {rt.hasTv && <span>TV</span>}
               </div>
               {rt.availableRooms !== undefined && (
-                <p className="mt-2 text-sm font-medium text-green-700">
+                <p className="mt-2 text-sm font-medium text-zinc-700">
                   {rt.availableRooms > 0 ? `${rt.availableRooms} rooms available` : 'Sold out'}
                 </p>
               )}

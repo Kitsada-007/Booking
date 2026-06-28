@@ -33,7 +33,7 @@ export function ReviewForm({ roomTypeId, bookingId, onSuccess }: ReviewFormProps
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+      {error && <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
       <div>
         <label className="block text-sm font-medium mb-2">Rating</label>

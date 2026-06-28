@@ -160,11 +160,11 @@ export default function StaffPackagesPage() {
                 <span className="text-zinc-500">{pkg.roomType.name}</span>
                 <span className="text-zinc-500">฿{pkg.price.toLocaleString()}</span>
                 <span className="text-xs text-zinc-400">{new Date(pkg.startDate).toLocaleDateString()} — {new Date(pkg.endDate).toLocaleDateString()}</span>
-                {!pkg.isActive && <span className="rounded bg-red-50 px-1.5 py-0.5 text-xs text-red-600">Inactive</span>}
+                {!pkg.isActive && <span className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-500">Inactive</span>}
               </div>
               <div className="flex gap-2">
                 <button onClick={() => editItem(pkg)} className="text-xs text-zinc-600 hover:text-zinc-900">Edit</button>
-                <button onClick={() => handleDelete(pkg.id)} className="text-xs text-red-600 hover:text-red-800">Delete</button>
+                <button onClick={() => handleDelete(pkg.id)} className="text-xs text-zinc-500 hover:text-zinc-700">Delete</button>
               </div>
             </div>
           ))}

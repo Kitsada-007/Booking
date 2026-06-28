@@ -58,7 +58,7 @@ export default function EditUserPage(props: EditPageProps) {
   }
 
   if (!user) {
-    return <div className="mx-auto max-w-md px-4 py-8 text-red-600">User not found</div>;
+    return <div className="mx-auto max-w-md px-4 py-8 text-zinc-500">User not found</div>;
   }
 
   return (
@@ -68,7 +68,7 @@ export default function EditUserPage(props: EditPageProps) {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>
+          <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>
         )}
 
         <div>

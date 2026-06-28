@@ -88,9 +88,9 @@ export default function AdminRoomsPage() {
                   <td className="px-4 py-3">{r.roomType.name}</td>
                   <td className="px-4 py-3">
                     <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${
-                      r.status === 'available' ? 'bg-green-50 text-green-700' :
-                      r.status === 'occupied' ? 'bg-blue-50 text-blue-700' :
-                      'bg-yellow-50 text-yellow-700'
+                      r.status === 'available' ? 'bg-zinc-100 text-zinc-700' :
+                      r.status === 'occupied' ? 'bg-zinc-200 text-zinc-800' :
+                      'bg-zinc-100 text-zinc-500'
                     }`}>
                       {r.status}
                     </span>

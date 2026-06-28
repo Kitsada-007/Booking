@@ -99,15 +99,15 @@ export default function ProfilePage() {
 
   if (!user) return <div className="mx-auto max-w-lg px-4 py-16 text-center"><Link href="/login?redirect=/profile" className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white">Sign in</Link></div>;
   if (loading) return <div className="mx-auto max-w-lg px-4 py-8 text-zinc-400">Loading...</div>;
-  if (!profile) return <div className="mx-auto max-w-lg px-4 py-8 text-red-600">Profile not found</div>;
+  if (!profile) return <div className="mx-auto max-w-lg px-4 py-8 text-zinc-500">Profile not found</div>;
 
   return (
     <div className="mx-auto max-w-lg px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">My Profile</h1>
       <p className="text-sm text-zinc-500 mb-6 capitalize">Role: {profile.role.replace('_', ' ')}</p>
 
-      {error && <div className="mb-4 rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
-      {success && <div className="mb-4 rounded bg-green-50 p-3 text-sm text-green-700">{success}</div>}
+      {error && <div className="mb-4 rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
+      {success && <div className="mb-4 rounded bg-zinc-100 p-3 text-sm text-zinc-700">✓ {success}</div>}
 
       <form onSubmit={handleSave} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">

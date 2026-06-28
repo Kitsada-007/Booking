@@ -100,10 +100,10 @@ export default function BoatDetailPage() {
                 <p className="text-sm text-zinc-500">No time slots found.</p>
               ) : (
                 boatType.timeSlots.map((ts) => (
-                  <div key={ts.id} className={`flex items-center justify-between rounded border px-4 py-3 text-sm ${ts.available > 0 ? 'border-zinc-200' : 'border-red-200 bg-red-50'}`}>
+                  <div key={ts.id} className={`flex items-center justify-between rounded border px-4 py-3 text-sm ${ts.available > 0 ? 'border-zinc-200' : 'border-zinc-200 bg-zinc-50'}`}>
                     <div>
                       <span className="font-mono">{ts.startTime} — {ts.endTime}</span>
-                      <span className={`ml-3 ${ts.available > 0 ? 'text-green-700' : 'text-red-600'}`}>
+                      <span className={`ml-3 ${ts.available > 0 ? 'text-zinc-700' : 'text-zinc-400'}`}>
                         {ts.available > 0 ? `${ts.available} spots left` : 'Full'}
                       </span>
                     </div>

@@ -54,7 +54,7 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
   }, [props.params]);
 
   if (loading) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-400">Loading...</div>;
-  if (!roomType) return <div className="mx-auto max-w-3xl px-4 py-8 text-red-600">Room type not found</div>;
+  if (!roomType) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-500">Room type not found</div>;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -65,7 +65,7 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
 
       {reviewSummary.totalReviews > 0 && (
         <div className="mt-2 flex items-center gap-2 text-sm text-zinc-500">
-          <span className="text-yellow-400">{'★'.repeat(Math.round(reviewSummary.averageRating))}{'☆'.repeat(5 - Math.round(reviewSummary.averageRating))}</span>
+          <span className="text-zinc-400">{'★'.repeat(Math.round(reviewSummary.averageRating))}{'☆'.repeat(5 - Math.round(reviewSummary.averageRating))}</span>
           <span>{reviewSummary.averageRating.toFixed(1)} ({reviewSummary.totalReviews} review{reviewSummary.totalReviews !== 1 ? 's' : ''})</span>
         </div>
       )}
@@ -116,7 +116,7 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
                   <span className="font-medium text-sm">{review.userName}</span>
                   <span className="text-xs text-zinc-400">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <div className="mt-1 text-yellow-400 text-sm">
+                <div className="mt-1 text-zinc-400 text-sm">
                   {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
                 </div>
                 {review.comment && (

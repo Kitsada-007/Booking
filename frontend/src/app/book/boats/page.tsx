@@ -87,7 +87,7 @@ function BookBoatForm() {
     return (
       <div className="mx-auto max-w-lg px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">Boat Booking Confirmed!</h1>
-        <div className="rounded border border-green-200 bg-green-50 p-4 text-sm text-green-800 mb-6">
+        <div className="rounded border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700 mb-6">
           Your boat booking has been created. Complete your payment to confirm.
         </div>
         <div className="space-y-2 text-sm">
@@ -123,7 +123,7 @@ function BookBoatForm() {
       <h1 className="text-2xl font-bold mb-6">Book a Boat</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+        {error && <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
         <div>
           <label htmlFor="boatTypeId" className="block text-sm font-medium">Boat type</label>
@@ -150,7 +150,7 @@ function BookBoatForm() {
             ))}
           </select>
           {selectedBoatType?.timeSlots?.filter((ts) => ts.available <= 0).length === selectedBoatType?.timeSlots?.length && (
-            <p className="mt-1 text-xs text-red-600">All time slots are full for this date.</p>
+            <p className="mt-1 text-xs text-zinc-500">All time slots are full for this date.</p>
           )}
         </div>
 

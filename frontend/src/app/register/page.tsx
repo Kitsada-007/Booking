@@ -40,7 +40,7 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>
+            <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>
           )}
 
           <div className="grid grid-cols-2 gap-3">

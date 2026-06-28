@@ -23,11 +23,11 @@ interface BoatBooking {
 }
 
 const statusColors: Record<string, string> = {
-  pending_payment: 'bg-yellow-50 text-yellow-700',
-  confirmed: 'bg-green-50 text-green-700',
-  checked_in: 'bg-purple-50 text-purple-700',
-  cancelled: 'bg-red-50 text-red-700',
-  completed: 'bg-blue-50 text-blue-700',
+  pending_payment: 'bg-zinc-100 text-zinc-600',
+  confirmed: 'bg-zinc-200 text-zinc-700',
+  checked_in: 'bg-zinc-300 text-zinc-800',
+  cancelled: 'bg-zinc-100 text-zinc-400 line-through',
+  completed: 'bg-zinc-800 text-white',
 };
 
 export default function MyBookingsPage() {
@@ -123,7 +123,7 @@ export default function MyBookingsPage() {
                         }
                       } catch { /* ignore */ }
                     }
-                  }} className="text-sm text-red-600 hover:text-red-800">Cancel</button>
+                  }} className="text-sm text-zinc-600 hover:text-zinc-800">Cancel</button>
                 )}
               </div>
             </div>

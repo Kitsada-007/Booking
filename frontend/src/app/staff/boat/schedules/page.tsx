@@ -149,7 +149,7 @@ export default function BoatSchedulesPage() {
                       </div>
                       <div className="flex gap-2">
                         <button onClick={() => editSlot(slot)} className="text-xs text-zinc-600 hover:text-zinc-900">Edit</button>
-                        <button onClick={() => handleDelete(slot.id)} className="text-xs text-red-600 hover:text-red-800">Delete</button>
+                        <button onClick={() => handleDelete(slot.id)} className="text-xs text-zinc-500 hover:text-zinc-700">Delete</button>
                       </div>
                     </div>
                   ))}

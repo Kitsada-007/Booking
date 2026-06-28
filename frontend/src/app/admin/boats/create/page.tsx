@@ -34,7 +34,7 @@ export default function CreateBoatPage() {
     <div className="mx-auto max-w-md px-4 py-8">
       <h1 className="mb-6 text-2xl font-bold">Create Boat</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+        {error && <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
         <div>
           <label className="block text-sm font-medium">Boat number</label>
           <input required value={boatNumber} onChange={(e) => setBoatNumber(e.target.value)} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />

@@ -34,7 +34,7 @@ function BookingDetail() {
 
   if (!user) return <div className="mx-auto max-w-lg px-4 py-16 text-center"><Link href="/login?redirect=/my-bookings" className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white">Sign in</Link></div>;
   if (loading) return <div className="mx-auto max-w-lg px-4 py-8 text-zinc-400">Loading...</div>;
-  if (!booking) return <div className="mx-auto max-w-lg px-4 py-8 text-red-600">Booking not found</div>;
+  if (!booking) return <div className="mx-auto max-w-lg px-4 py-8 text-zinc-500">Booking not found</div>;
 
   const isRoom = bookingType === 'room';
 
@@ -99,7 +99,7 @@ function BookingDetail() {
               setBooking({ ...booking, status: 'cancelled' });
             } catch { /* ignore */ }
           }
-        }} className="mt-6 rounded border border-red-300 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+        }} className="mt-6 rounded border border-zinc-300 px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-50">
           Cancel booking
         </button>
       )}
@@ -123,7 +123,7 @@ function BookingDetail() {
       )}
 
       {reviewCreated && (
-        <div className="mt-6 rounded border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+        <div className="mt-6 rounded border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700">
           Thank you! Your review has been submitted.
         </div>
       )}

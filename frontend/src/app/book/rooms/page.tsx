@@ -76,7 +76,7 @@ function BookForm() {
     return (
       <div className="mx-auto max-w-lg px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">Booking Confirmed!</h1>
-        <div className="rounded border border-green-200 bg-green-50 p-4 text-sm text-green-800 mb-6">
+        <div className="rounded border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-700 mb-6">
           Your booking has been created. Complete your payment to confirm.
         </div>
         <div className="space-y-2 text-sm">
@@ -112,7 +112,7 @@ function BookForm() {
       <h1 className="text-2xl font-bold mb-6">Book a Room</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <div className="rounded bg-red-50 p-3 text-sm text-red-600">{error}</div>}
+        {error && <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
 
         <div>
           <label htmlFor="roomTypeId" className="block text-sm font-medium">Room type</label>

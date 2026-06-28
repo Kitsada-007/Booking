@@ -111,8 +111,8 @@ export default function AdminUsersPage() {
                     <td className="px-4 py-3">
                       <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${
                         u.status === 'active'
-                          ? 'bg-green-50 text-green-700'
-                          : 'bg-red-50 text-red-700'
+                          ? 'bg-zinc-200 text-zinc-700'
+                          : 'bg-zinc-100 text-zinc-500'
                       }`}>
                         {u.status}
                       </span>
