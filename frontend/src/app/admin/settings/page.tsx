@@ -7,6 +7,8 @@ import { apiClient } from '@/lib/api-client';
 interface SettingFields {
   name: string;
   address: string;
+  latitude: string;
+  longitude: string;
   phone: string;
   email: string;
   facebook: string;
@@ -26,7 +28,7 @@ interface BankAccount {
 export default function AdminSettingsPage() {
   const { user } = useAuth();
   const [form, setForm] = useState<SettingFields>({
-    name: '', address: '', phone: '', email: '',
+    name: '', address: '', latitude: '', longitude: '', phone: '', email: '',
     facebook: '', line: '', businessHours: '', terms: '',
   });
   const [accounts, setAccounts] = useState<BankAccount[]>([]);
@@ -45,6 +47,8 @@ export default function AdminSettingsPage() {
         setForm({
           name: settingsData.name || '',
           address: settingsData.address || '',
+          latitude: settingsData.latitude != null ? String(settingsData.latitude) : '',
+          longitude: settingsData.longitude != null ? String(settingsData.longitude) : '',
           phone: settingsData.phone || '',
           email: settingsData.email || '',
           facebook: settingsData.facebook || '',
@@ -63,10 +67,17 @@ export default function AdminSettingsPage() {
     setSaving(true);
     setError('');
     try {
-      const updated = await apiClient.patch<SettingFields>('/settings', form);
+      const body: Record<string, unknown> = { ...form };
+      if (body.latitude) body.latitude = Number(body.latitude);
+      else delete body.latitude;
+      if (body.longitude) body.longitude = Number(body.longitude);
+      else delete body.longitude;
+      const updated = await apiClient.patch<SettingFields>('/settings', body);
       setForm({
         name: updated.name || '',
         address: updated.address || '',
+        latitude: updated.latitude != null ? String(updated.latitude) : '',
+        longitude: updated.longitude != null ? String(updated.longitude) : '',
         phone: updated.phone || '',
         email: updated.email || '',
         facebook: updated.facebook || '',
@@ -121,6 +132,16 @@ export default function AdminSettingsPage() {
           <div>
             <label className="block text-sm font-medium">Address</label>
             <input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium">Latitude</label>
+              <input type="number" step="any" value={form.latitude} onChange={(e) => setForm({ ...form, latitude: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" placeholder="e.g. 13.7367" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Longitude</label>
+              <input type="number" step="any" value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} className="mt-1 block w-full rounded border border-zinc-300 px-3 py-2 text-sm" placeholder="e.g. 100.5232" />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>

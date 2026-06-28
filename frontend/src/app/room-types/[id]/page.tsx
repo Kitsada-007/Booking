@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { apiClient } from '@/lib/api-client';
+import { MapView } from '@/components/MapView';
 
 interface DetailPageProps { params: Promise<{ id: string }> }
 
@@ -23,6 +24,7 @@ interface ReviewsResponse {
 export default function RoomTypeDetailPage(props: DetailPageProps) {
   const [roomType, setRoomType] = useState<Record<string, unknown> | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [mapCoords, setMapCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [reviewSummary, setReviewSummary] = useState({ averageRating: 0, totalReviews: 0 });
   const [loading, setLoading] = useState(true);
   const [loadingReviews, setLoadingReviews] = useState(true);
@@ -40,6 +42,10 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
           setReviews(revData.data);
           setReviewSummary(revData.summary);
         }
+      } catch { /* ignore */ }
+      try {
+        const s = await apiClient.get<{ latitude?: number; longitude?: number }>('/settings');
+        if (s.latitude && s.longitude) setMapCoords({ lat: s.latitude, lng: s.longitude });
       } catch { /* ignore */ }
       setLoading(false);
       setLoadingReviews(false);
@@ -126,6 +132,13 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
           </div>
         )}
       </div>
+
+      {mapCoords && (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-2">Location</h2>
+          <MapView latitude={mapCoords.lat} longitude={mapCoords.lng} label="View on OpenStreetMap" height={250} />
+        </div>
+      )}
     </div>
   );
 }
