@@ -105,6 +105,7 @@ router.get(
 const updateProfileSchema = z.object({
   firstName: z.string().min(1).max(100).optional(),
   lastName: z.string().min(1).max(100).optional(),
+  email: z.string().email().optional(),
   phone: z.string().optional(),
   address: z.string().optional(),
   lineId: z.string().optional(),
@@ -120,7 +121,9 @@ router.patch(
     try {
       const user = await updateProfile(req.user!.userId, req.body);
       res.json(user);
-    } catch {
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : 'Failed to update profile';
+      if (msg === 'Email already in use') { res.status(409).json({ error: msg, code: 'CONFLICT' }); return; }
       res.status(500).json({ error: 'Failed to update profile', code: 'INTERNAL_ERROR' });
     }
   }

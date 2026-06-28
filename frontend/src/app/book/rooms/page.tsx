@@ -19,6 +19,7 @@ function BookForm() {
   const searchParams = useSearchParams();
   const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
   const [roomTypeId, setRoomTypeId] = useState(searchParams.get('roomTypeId') || '');
+  const packageId = searchParams.get('packageId') || undefined;
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [quantity, setQuantity] = useState('1');
@@ -43,12 +44,14 @@ function BookForm() {
     setSubmitting(true);
 
     try {
-      const data = await apiClient.post<{ booking: Record<string, unknown>; payment: Record<string, unknown> }>('/bookings/rooms', {
+      const body: Record<string, unknown> = {
         roomTypeId, checkIn, checkOut,
         quantity: Number(quantity),
         guestCount: Number(guestCount),
         paymentMethod,
-      });
+      };
+      if (packageId) body.packageId = packageId;
+      const data = await apiClient.post<{ booking: Record<string, unknown>; payment: Record<string, unknown> }>('/bookings/rooms', body);
       setResult(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Booking failed');

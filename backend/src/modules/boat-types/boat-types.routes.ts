@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     const result = await listBoatTypes({
       page: Number(req.query.page) || undefined,
       pageSize: Number(req.query.pageSize) || undefined,
+      date: typeof req.query.date === 'string' ? req.query.date : undefined,
     });
     res.json(result);
   } catch {
@@ -28,7 +29,8 @@ router.get('/', async (req, res) => {
 // ─── Public: get ───
 router.get('/:id', async (req, res) => {
   try {
-    const boatType = await getBoatType(req.params.id as string);
+    const date = typeof req.query.date === 'string' ? req.query.date : undefined;
+    const boatType = await getBoatType(req.params.id as string, date);
     res.json(boatType);
   } catch (error) {
     const msg = error instanceof Error ? error.message : 'Not found';

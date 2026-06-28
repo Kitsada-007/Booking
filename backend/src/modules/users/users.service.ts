@@ -135,6 +135,7 @@ export async function updateProfile(
   input: {
     firstName?: string;
     lastName?: string;
+    email?: string;
     phone?: string;
     address?: string;
     lineId?: string;
@@ -142,6 +143,11 @@ export async function updateProfile(
     profileImage?: string;
   }
 ) {
+  if (input.email) {
+    const existing = await prisma.user.findUnique({ where: { email: input.email } });
+    if (existing && existing.id !== userId) throw new Error('Email already in use');
+  }
+
   const user = await prisma.user.update({
     where: { id: userId },
     data: input,

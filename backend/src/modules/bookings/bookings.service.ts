@@ -1,4 +1,5 @@
 import { prisma } from '../../common/prisma';
+import { notifyBookingCreated, notifyBookingStatusChanged, notifyReviewPrompt } from '../notifications/notification.service';
 
 interface BookingCreateInput {
   roomTypeId: string;
@@ -80,6 +81,8 @@ export async function createRoomBooking(userId: string, input: BookingCreateInpu
     },
   });
 
+  notifyBookingCreated(userId, 'room', { id: booking.id, totalPrice });
+
   return {
     booking: {
       ...booking,
@@ -136,11 +139,14 @@ export async function cancelRoomBooking(userId: string, bookingId: string) {
   if (!booking) throw new Error('Booking not found');
   if (booking.status !== 'pending_payment') throw new Error('Booking cannot be cancelled');
 
-  return prisma.roomBooking.update({
+  const updated = await prisma.roomBooking.update({
     where: { id: bookingId },
     data: { status: 'cancelled' },
     include: { roomType: true, payment: true },
   });
+
+  notifyBookingStatusChanged(userId, 'room', { id: bookingId, status: 'cancelled' });
+  return updated;
 }
 
 export async function completeRoomBooking(bookingId: string) {
@@ -148,9 +154,151 @@ export async function completeRoomBooking(bookingId: string) {
   if (!booking) throw new Error('Booking not found');
   if (booking.status !== 'confirmed') throw new Error('Only confirmed bookings can be completed');
 
-  return prisma.roomBooking.update({
+  const updated = await prisma.roomBooking.update({
     where: { id: bookingId },
     data: { status: 'completed' },
     include: { roomType: true, payment: true },
   });
+
+  notifyBookingStatusChanged(booking.userId, 'room', { id: bookingId, status: 'completed' });
+  notifyReviewPrompt(booking.userId, 'room', bookingId);
+  return updated;
+}
+
+// ─── Boat booking ───
+
+interface BoatBookingCreateInput {
+  boatTypeId: string;
+  timeSlotId: string;
+  date: string;
+  boatCount: number;
+  guestCount: number;
+  paymentMethod: 'gateway' | 'bank_transfer';
+}
+
+export async function createBoatBooking(userId: string, input: BoatBookingCreateInput): Promise<BookingWithPayment> {
+  const boatType = await prisma.boatType.findUnique({ where: { id: input.boatTypeId } });
+  if (!boatType) throw new Error('Boat type not found');
+
+  const timeSlot = await prisma.timeSlot.findUnique({ where: { id: input.timeSlotId } });
+  if (!timeSlot || timeSlot.boatTypeId !== input.boatTypeId) throw new Error('Time slot not found');
+
+  const bookingDate = new Date(input.date);
+  if (isNaN(bookingDate.getTime())) throw new Error('Invalid date');
+
+  // Count already booked boats for this slot + date
+  const bookedAgg = await prisma.boatBooking.aggregate({
+    where: {
+      timeSlotId: input.timeSlotId,
+      date: bookingDate,
+      status: { in: ['pending_payment', 'confirmed'] },
+    },
+    _sum: { boatCount: true },
+  });
+
+  const bookedCount = bookedAgg._sum.boatCount ?? 0;
+  const available = timeSlot.maxBookings - bookedCount;
+
+  if (input.boatCount > available) throw new Error('Not enough capacity available');
+
+  const totalPrice = boatType.price * input.boatCount;
+
+  const booking = await prisma.boatBooking.create({
+    data: {
+      userId,
+      boatTypeId: input.boatTypeId,
+      timeSlotId: input.timeSlotId,
+      date: bookingDate,
+      boatCount: input.boatCount,
+      guestCount: input.guestCount,
+      totalPrice,
+      status: 'pending_payment',
+    },
+    include: { boatType: true, timeSlot: true, payment: true },
+  });
+
+  const payment = await prisma.payment.create({
+    data: {
+      boatBookingId: booking.id,
+      amount: totalPrice,
+      method: input.paymentMethod,
+      status: 'pending',
+    },
+  });
+
+  notifyBookingCreated(userId, 'boat', { id: booking.id, totalPrice });
+
+  return {
+    booking: { ...booking, payment: undefined },
+    payment: {
+      ...payment,
+      ...(input.paymentMethod === 'bank_transfer'
+        ? { bankAccounts: await prisma.bankAccount.findMany({ where: { isActive: true } }) }
+        : { redirectUrl: `https://mock-gateway.example.com/pay/${payment.id}` }),
+    },
+  };
+}
+
+export async function listMyBoatBookings(userId: string, params: { status?: string; page?: number; pageSize?: number }) {
+  const page = Math.max(1, params.page || 1);
+  const pageSize = Math.min(100, Math.max(1, params.pageSize || 20));
+
+  const where: Record<string, unknown> = { userId };
+  if (params.status) where.status = params.status;
+
+  const [data, totalItems] = await Promise.all([
+    prisma.boatBooking.findMany({
+      where,
+      include: { boatType: true, timeSlot: true, payment: true },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.boatBooking.count({ where }),
+  ]);
+
+  return {
+    data,
+    pagination: { page, pageSize, totalItems, totalPages: Math.ceil(totalItems / pageSize) },
+  };
+}
+
+export async function getMyBoatBooking(userId: string, bookingId: string) {
+  const booking = await prisma.boatBooking.findFirst({
+    where: { id: bookingId, userId },
+    include: { boatType: true, timeSlot: true, payment: true },
+  });
+  if (!booking) throw new Error('Booking not found');
+  return booking;
+}
+
+export async function cancelMyBoatBooking(userId: string, bookingId: string) {
+  const booking = await prisma.boatBooking.findFirst({ where: { id: bookingId, userId } });
+  if (!booking) throw new Error('Booking not found');
+  if (booking.status !== 'pending_payment') throw new Error('Booking cannot be cancelled');
+
+  const cancelled = await prisma.boatBooking.update({
+    where: { id: bookingId },
+    data: { status: 'cancelled' },
+    include: { boatType: true, timeSlot: true, payment: true },
+  });
+
+  notifyBookingStatusChanged(userId, 'boat', { id: bookingId, status: 'cancelled' });
+  return cancelled;
+}
+
+export async function completeBoatBooking(bookingId: string) {
+  const booking = await prisma.boatBooking.findUnique({ where: { id: bookingId } });
+  if (!booking) throw new Error('Booking not found');
+  if (booking.status !== 'confirmed') throw new Error('Only confirmed bookings can be completed');
+
+  const updated = await prisma.boatBooking.update({
+    where: { id: bookingId },
+    data: { status: 'completed' },
+    include: { boatType: true, timeSlot: true, payment: true },
+  });
+
+  notifyBookingStatusChanged(booking.userId, 'boat', { id: bookingId, status: 'completed' });
+  notifyReviewPrompt(booking.userId, 'boat', bookingId);
+  return updated;
 }

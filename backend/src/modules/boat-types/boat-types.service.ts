@@ -14,13 +14,42 @@ const boatTypeInclude = {
   _count: { select: { boats: true } },
 };
 
-export async function listBoatTypes(params: PaginationParams): Promise<PaginatedResult<unknown>> {
+async function getTimeSlotAvailability(boatTypeId: string, date?: string) {
+  const slots = await prisma.timeSlot.findMany({ where: { boatTypeId } });
+  if (!date || slots.length === 0) return [];
+
+  const dateObj = new Date(date);
+  if (isNaN(dateObj.getTime())) return [];
+
+  const bookedCounts = await prisma.boatBooking.groupBy({
+    by: ['timeSlotId'],
+    where: {
+      timeSlotId: { in: slots.map((s) => s.id) },
+      date: dateObj,
+      status: { in: ['pending_payment', 'confirmed'] },
+    },
+    _sum: { boatCount: true },
+  });
+
+  const bookedMap = new Map(bookedCounts.map((b) => [b.timeSlotId, b._sum.boatCount ?? 0]));
+
+  return slots.map((s) => ({
+    id: s.id,
+    startTime: s.startTime,
+    endTime: s.endTime,
+    maxBookings: s.maxBookings,
+    booked: bookedMap.get(s.id) ?? 0,
+    available: s.maxBookings - (bookedMap.get(s.id) ?? 0),
+  }));
+}
+
+export async function listBoatTypes(params: PaginationParams & { date?: string }): Promise<PaginatedResult<unknown>> {
   const page = Math.max(1, params.page || 1);
   const pageSize = Math.min(100, Math.max(1, params.pageSize || 20));
 
   const [data, totalItems] = await Promise.all([
     prisma.boatType.findMany({
-      include: boatTypeInclude,
+      include: { _count: { select: { boats: true } }, timeSlots: true },
       skip: (page - 1) * pageSize,
       take: pageSize,
       orderBy: { createdAt: 'desc' },
@@ -28,27 +57,35 @@ export async function listBoatTypes(params: PaginationParams): Promise<Paginated
     prisma.boatType.count(),
   ]);
 
+  let result = await Promise.all(data.map(async (bt) => ({
+    ...bt,
+    boatCount: bt._count.boats,
+    timeSlots: params.date ? await getTimeSlotAvailability(bt.id, params.date) : bt.timeSlots,
+  })));
+
   return {
-    data: data.map((bt) => ({
-      ...bt,
-      boatCount: bt._count.boats,
-    })),
+    data: result,
     pagination: { page, pageSize, totalItems, totalPages: Math.ceil(totalItems / pageSize) },
   };
 }
 
-export async function getBoatType(id: string) {
+export async function getBoatType(id: string, date?: string) {
   const boatType = await prisma.boatType.findUnique({
     where: { id },
     include: {
       _count: { select: { boats: true } },
       boats: { select: { id: true, boatNumber: true } },
+      timeSlots: true,
     },
   });
 
   if (!boatType) throw new Error('Boat type not found');
 
-  return { ...boatType, boatCount: boatType._count.boats };
+  return {
+    ...boatType,
+    boatCount: boatType._count.boats,
+    timeSlots: date ? await getTimeSlotAvailability(boatType.id, date) : boatType.timeSlots,
+  };
 }
 
 export async function createBoatType(input: {

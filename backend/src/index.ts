@@ -15,6 +15,9 @@ import bookingRoutes from './modules/bookings/bookings.routes';
 import paymentRoutes from './modules/payments/payments.routes';
 import reviewRoutes from './modules/reviews/reviews.routes';
 import staffRoutes from './modules/staff/staff.routes';
+import scheduleRoutes from './modules/schedules/schedules.routes';
+import packageRoutes from './modules/packages/packages.routes';
+import reportRoutes from './modules/reports/reports.routes';
 
 dotenv.config();
 
@@ -40,6 +43,9 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/staff', staffRoutes);
+app.use('/api/schedules', scheduleRoutes);
+app.use('/api/packages', packageRoutes);
+app.use('/api/reports', reportRoutes);
 
 export default app;
 
