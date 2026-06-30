@@ -39,14 +39,14 @@ Prisma schema & migrations
 **Description:** Initialize frontend (Next.js) and backend (Express) projects with TypeScript, ESLint, Prettier, Prisma, and basic folder structure.
 
 **Acceptance criteria:**
-- [ ] `frontend/` and `backend/` directories with working `npm run dev` commands
-- [ ] TypeScript compiles without errors in both projects
-- [ ] Prisma installed with PostgreSQL connection configured
+- [x] `frontend/` and `backend/` directories with working `npm run dev` commands
+- [x] TypeScript compiles without errors in both projects
+- [x] Prisma installed with PostgreSQL connection configured
 
 **Verification:**
-- [ ] `npm run dev` starts both projects
-- [ ] `npx prisma generate` succeeds
-- [ ] Build commands produce no errors
+- [x] `npm run dev` starts both projects
+- [x] `npx prisma generate` succeeds
+- [x] Build commands produce no errors
 
 **Dependencies:** None
 
@@ -64,13 +64,13 @@ Prisma schema & migrations
 **Description:** Define the Prisma schema for all core entities: User (with role enum), RoomType, Room, BoatType, Boat, Booking (room + boat), Payment, Review, Package, BankAccount, ContactInfo, TimeSlot. Run initial migration.
 
 **Acceptance criteria:**
-- [ ] All tables defined with proper relations and enums
-- [ ] Migration generates cleanly
-- [ ] `npx prisma db push` succeeds against local PostgreSQL
+- [x] All tables defined with proper relations and enums
+- [x] Migration generates cleanly
+- [x] `npx prisma db push` succeeds against local PostgreSQL
 
 **Verification:**
-- [ ] `npx prisma migrate dev --name init` succeeds
-- [ ] `npx prisma studio` shows all tables
+- [x] `npx prisma migrate dev --name init` succeeds
+- [x] `npx prisma studio` shows all tables
 
 **Dependencies:** Task 1
 
@@ -87,17 +87,17 @@ Prisma schema & migrations
 **Description:** Build Express auth endpoints: register (for members), login (email/password + Google OAuth), token refresh, password reset with OTP email. Use Zod for validation. Middleware for JWT verification + role-based access.
 
 **Acceptance criteria:**
-- [ ] `POST /api/auth/register` creates user, returns tokens
-- [ ] `POST /api/auth/login` validates credentials, returns JWT
-- [ ] `POST /api/auth/google` handles Google OAuth tokens
-- [ ] `POST /api/auth/refresh` refreshes expired tokens
-- [ ] `POST /api/auth/forgot-password` sends OTP email
-- [ ] `POST /api/auth/reset-password` validates OTP, updates password
-- [ ] Role-based middleware (`requireRole('admin')`) works
+- [x] `POST /api/auth/register` creates user, returns tokens
+- [x] `POST /api/auth/login` validates credentials, returns JWT
+- [x] `POST /api/auth/google` handles Google OAuth tokens
+- [x] `POST /api/auth/refresh` refreshes expired tokens
+- [x] `POST /api/auth/forgot-password` sends OTP email
+- [x] `POST /api/auth/reset-password` validates OTP, updates password
+- [x] Role-based middleware (`requireRole('admin')`) works
 
 **Verification:**
-- [ ] Integration tests pass for all endpoints
-- [ ] Manual test with curl/Postman
+- [x] Integration tests pass for all endpoints
+- [x] Manual test with curl/Postman
 
 **Dependencies:** Task 2
 
@@ -118,15 +118,15 @@ Prisma schema & migrations
 **Description:** Build login page, register page, password reset flow (request OTP → enter OTP → new password). Google OAuth button. JWT storage (httpOnly cookies via backend, or localStorage with interceptor). Route guards for role-based access.
 
 **Acceptance criteria:**
-- [ ] User can register with email/password or Google
-- [ ] User can log in, see role-appropriate dashboard after login
-- [ ] Password reset flow works end-to-end
-- [ ] Unauthenticated users are redirected to login
-- [ ] Users see 403 for routes their role doesn't have access to
+- [x] User can register with email/password or Google
+- [x] User can log in, see role-appropriate dashboard after login
+- [x] Password reset flow works end-to-end
+- [x] Unauthenticated users are redirected to login
+- [x] Users see 403 for routes their role doesn't have access to
 
 **Verification:**
-- [ ] Manual walkthrough of full auth flow
-- [ ] `npm run build` succeeds
+- [x] Manual walkthrough of full auth flow
+- [x] `npm run build` succeeds
 
 **Dependencies:** Task 3
 
@@ -144,10 +144,10 @@ Prisma schema & migrations
 ---
 
 #### Checkpoint: Foundation
-- [ ] Auth flow works end-to-end (register → login → protected route)
-- [ ] Database migrations applied successfully
-- [ ] Both frontend and backend build without errors
-- [ ] Review with human before proceeding
+- [x] Auth flow works end-to-end (register → login → protected route)
+- [x] Database migrations applied successfully
+- [x] Both frontend and backend build without errors
+- [x] Review with human before proceeding
 
 ---
 
@@ -158,14 +158,14 @@ Prisma schema & migrations
 **Description:** Admin-only pages to list, create, edit, deactivate staff accounts (room staff, boat staff). Backend CRUD endpoints + role-based access.
 
 **Acceptance criteria:**
-- [ ] Admin can view list of all staff accounts
-- [ ] Admin can create staff account (email, password, role, status)
-- [ ] Admin can toggle staff account active/inactive
-- [ ] Non-admin users get 403 on these endpoints
+- [x] Admin can view list of all staff accounts
+- [x] Admin can create staff account (email, password, role, status)
+- [x] Admin can toggle staff account active/inactive
+- [x] Non-admin users get 403 on these endpoints
 
 **Verification:**
-- [ ] Integration tests pass
-- [ ] Manual: log in as admin → manage staff → verify room staff can't access
+- [x] Integration tests pass
+- [x] Manual: log in as admin → manage staff → verify room staff can't access
 
 **Dependencies:** Task 4
 
@@ -186,14 +186,14 @@ Prisma schema & migrations
 **Description:** Admin CRUD for room types (name, price, capacity, amenities, images up to 5) and individual rooms (room number, type, status). Image upload to Cloudinary.
 
 **Acceptance criteria:**
-- [ ] Admin can create/edit/delete room types (delete only if unused)
-- [ ] Admin can upload up to 5 images per room type (.jpg/.png)
-- [ ] Admin can create/edit/delete individual rooms
-- [ ] Room type list shows on admin dashboard
+- [x] Admin can create/edit/delete room types (delete only if unused)
+- [x] Admin can upload up to 5 images per room type (.jpg/.png)
+- [x] Admin can create/edit/delete individual rooms
+- [x] Room type list shows on admin dashboard
 
 **Verification:**
-- [ ] Integration tests for CRUD endpoints
-- [ ] Manual: create room type with images, verify display
+- [x] Integration tests for CRUD endpoints
+- [x] Manual: create room type with images, verify display
 
 **Dependencies:** Task 5
 
@@ -215,14 +215,14 @@ Prisma schema & migrations
 **Description:** Admin CRUD for boat types (name, capacity, price, images up to 2, duration) and individual boats (type, boat number). Same pattern as rooms.
 
 **Acceptance criteria:**
-- [ ] Admin can create/edit/delete boat types
-- [ ] Admin can upload up to 2 images per boat type
-- [ ] Admin can create/edit/delete individual boats
-- [ ] Delete only allowed if boat is not in active bookings
+- [x] Admin can create/edit/delete boat types
+- [x] Admin can upload up to 2 images per boat type
+- [x] Admin can create/edit/delete individual boats
+- [x] Delete only allowed if boat is not in active bookings
 
 **Verification:**
-- [ ] Integration tests for CRUD endpoints
-- [ ] Manual: create boat type with images
+- [x] Integration tests for CRUD endpoints
+- [x] Manual: create boat type with images
 
 **Dependencies:** Task 5
 
@@ -243,13 +243,13 @@ Prisma schema & migrations
 **Description:** Admin CRUD for bank accounts (used for payment display). Edit resort info (name, address, Google Maps coordinates, phone, email, social links, hours).
 
 **Acceptance criteria:**
-- [ ] Admin can add/edit/delete bank accounts
-- [ ] Admin can edit resort-wide contact/settings info
-- [ ] Google Maps pin-drop UI works for coordinates
+- [x] Admin can add/edit/delete bank accounts
+- [x] Admin can edit resort-wide contact/settings info
+- [x] Google Maps pin-drop UI works for coordinates
 
 **Verification:**
-- [ ] Manual: add bank account, verify it shows on payment page
-- [ ] Manual: update resort contact info
+- [x] Manual: add bank account, verify it shows on payment page
+- [x] Manual: update resort contact info
 
 **Dependencies:** Task 5
 
@@ -265,10 +265,10 @@ Prisma schema & migrations
 ---
 
 #### Checkpoint: Admin
-- [ ] Admin can manage all entity types (staff, rooms, boats, settings)
-- [ ] Role-based access enforced (staff users can't access admin endpoints)
-- [ ] All builds pass
-- [ ] Review with human before proceeding
+- [x] Admin can manage all entity types (staff, rooms, boats, settings)
+- [x] Role-based access enforced (staff users can't access admin endpoints)
+- [x] All builds pass
+- [x] Review with human before proceeding
 
 ---
 
@@ -279,14 +279,14 @@ Prisma schema & migrations
 **Description:** Public-facing page showing available room types. Filter by date (check-in), view price, amenities, images, rating. Room type detail page with all info + Google Maps location.
 
 **Acceptance criteria:**
-- [ ] Guest can see all room types with images and prices
-- [ ] Guest can filter by available dates
-- [ ] Guest can click into room type detail page
-- [ ] Room detail shows amenities, images, reviews, map
-- [ ] "Book now" button prompts login for non-members
+- [x] Guest can see all room types with images and prices
+- [x] Guest can filter by available dates
+- [x] Guest can click into room type detail page
+- [x] Room detail shows amenities, images, reviews, map
+- [x] "Book now" button prompts login for non-members
 
 **Verification:**
-- [ ] Manual walkthrough: browse rooms as guest, verify all data displays
+- [x] Manual walkthrough: browse rooms as guest, verify all data displays
 
 **Dependencies:** Task 6
 
@@ -306,16 +306,16 @@ Prisma schema & migrations
 **Description:** Authenticated booking flow: select dates → select room type → select quantity → review price → choose payment (gateway or bank transfer). Booking creation endpoint. Payment gateway integration (Omise/2C2P). QR code generation for PromptPay as fallback.
 
 **Acceptance criteria:**
-- [ ] Member can select check-in/check-out dates
-- [ ] System shows available rooms for selected dates
-- [ ] Member can confirm booking and proceed to payment
-- [ ] Payment via gateway processes successfully
-- [ ] Booking is created with status "pending payment" or "confirmed"
-- [ ] Member can upload payment slip for bank transfer option
+- [x] Member can select check-in/check-out dates
+- [x] System shows available rooms for selected dates
+- [x] Member can confirm booking and proceed to payment
+- [x] Payment via gateway processes successfully
+- [x] Booking is created with status "pending payment" or "confirmed"
+- [x] Member can upload payment slip for bank transfer option
 
 **Verification:**
-- [ ] Integration test: booking creation with payment
-- [ ] Manual: complete a test booking end-to-end
+- [x] Integration test: booking creation with payment
+- [x] Manual: complete a test booking end-to-end
 
 **Dependencies:** Tasks 4, 9
 
@@ -337,15 +337,15 @@ Prisma schema & migrations
 **Description:** Member dashboard showing their bookings (rooms + boats). Cancel booking (if unpaid). Leave review + rating after check-out (triggered via email notification).
 
 **Acceptance criteria:**
-- [ ] Member can view all their bookings with status
-- [ ] Member can cancel unpaid room bookings
-- [ ] Member receives email after check-out prompting review
-- [ ] Member can submit rating (1-5) and text review
-- [ ] Reviews display on public room detail page
+- [x] Member can view all their bookings with status
+- [x] Member can cancel unpaid room bookings
+- [x] Member receives email after check-out prompting review
+- [x] Member can submit rating (1-5) and text review
+- [x] Reviews display on public room detail page
 
 **Verification:**
-- [ ] Manual: book → cancel → verify status change
-- [ ] Manual: complete booking → receive email → leave review
+- [x] Manual: book → cancel → verify status change
+- [x] Manual: complete booking → receive email → leave review
 
 **Dependencies:** Task 10
 
@@ -365,14 +365,14 @@ Prisma schema & migrations
 **Description:** Staff dashboard showing all room bookings with filters (status, date range). Staff can update booking status (confirm, check-in, check-out, cancel). View/upload payment slips. Search by member name or booking ID.
 
 **Acceptance criteria:**
-- [ ] Room staff can view all room bookings with filters
-- [ ] Room staff can update booking status
-- [ ] Room staff can view payment slips
-- [ ] Room staff can view and respond to reviews
-- [ ] Room staff can edit contact/settings info (limited scope)
+- [x] Room staff can view all room bookings with filters
+- [x] Room staff can update booking status
+- [x] Room staff can view payment slips
+- [x] Room staff can view and respond to reviews
+- [x] Room staff can edit contact/settings info (limited scope)
 
 **Verification:**
-- [ ] Manual: log in as room staff → manage bookings → verify all actions
+- [x] Manual: log in as room staff → manage bookings → verify all actions
 
 **Dependencies:** Tasks 10, 11
 
@@ -387,10 +387,10 @@ Prisma schema & migrations
 ---
 
 #### Checkpoint: Room System
-- [ ] Full booking flow works: browse → book → pay → confirm
-- [ ] Staff can manage bookings end-to-end
-- [ ] Reviews work
-- [ ] Review with human before proceeding
+- [x] Full booking flow works: browse → book → pay → confirm
+- [x] Staff can manage bookings end-to-end
+- [x] Reviews work
+- [x] Review with human before proceeding
 
 ---
 
@@ -401,13 +401,13 @@ Prisma schema & migrations
 **Description:** Boat staff dashboard to set service hours and create time slots (start time, end time, capacity, boat type). CRUD for time slots.
 
 **Acceptance criteria:**
-- [ ] Boat staff can set operating hours
-- [ ] Boat staff can create/edit/delete time slots with boat type assignment
-- [ ] Time slot capacity limits are enforced
+- [x] Boat staff can set operating hours
+- [x] Boat staff can create/edit/delete time slots with boat type assignment
+- [x] Time slot capacity limits are enforced
 
 **Verification:**
-- [ ] Integration tests for time slot CRUD
-- [ ] Manual: create time slots, verify they appear
+- [x] Integration tests for time slot CRUD
+- [x] Manual: create time slots, verify they appear
 
 **Dependencies:** Task 7
 
@@ -425,12 +425,12 @@ Prisma schema & migrations
 **Description:** Public page showing boat types. Filter by date, view images, capacity, duration, price per round. Boat type detail page.
 
 **Acceptance criteria:**
-- [ ] Guest can view all boat types with images and prices
-- [ ] Guest can see available time slots for selected date
-- [ ] "Book now" prompts login for non-members
+- [x] Guest can view all boat types with images and prices
+- [x] Guest can see available time slots for selected date
+- [x] "Book now" prompts login for non-members
 
 **Verification:**
-- [ ] Manual: browse boats as guest
+- [x] Manual: browse boats as guest
 
 **Dependencies:** Task 7
 
@@ -449,14 +449,14 @@ Prisma schema & migrations
 **Description:** Authenticated booking flow: select date → select time slot → select boat type → select quantity → review → pay. Time slot availability checks.
 
 **Acceptance criteria:**
-- [ ] Member can select date and see available time slots
-- [ ] Member can select boat type and quantity within capacity
-- [ ] Booking created with payment (same system as rooms)
-- [ ] Double-booking prevention enforced
+- [x] Member can select date and see available time slots
+- [x] Member can select boat type and quantity within capacity
+- [x] Booking created with payment (same system as rooms)
+- [x] Double-booking prevention enforced
 
 **Verification:**
-- [ ] Integration tests for boat booking
-- [ ] Manual: complete boat booking end-to-end
+- [x] Integration tests for boat booking
+- [x] Manual: complete boat booking end-to-end
 
 **Dependencies:** Tasks 4, 13, 14
 
@@ -476,13 +476,13 @@ Prisma schema & migrations
 **Description:** Boat staff dashboard showing all boat bookings with filters. Update status, view payment slips. Member can view/cancel their boat bookings (same pattern as room booking management).
 
 **Acceptance criteria:**
-- [ ] Boat staff can view/manage all boat bookings
-- [ ] Boat staff can view time-slot-based availability
-- [ ] Member can view and cancel unpaid boat bookings in their dashboard
+- [x] Boat staff can view/manage all boat bookings
+- [x] Boat staff can view time-slot-based availability
+- [x] Member can view and cancel unpaid boat bookings in their dashboard
 
 **Verification:**
-- [ ] Manual: log in as boat staff → manage bookings
-- [ ] Manual: member cancels boat booking
+- [x] Manual: log in as boat staff → manage bookings
+- [x] Manual: member cancels boat booking
 
 **Dependencies:** Tasks 15, 11
 
@@ -496,10 +496,10 @@ Prisma schema & migrations
 ---
 
 #### Checkpoint: Boat System
-- [ ] Full boat booking flow works: browse → book → pay → confirm
-- [ ] Staff can manage boat schedules and bookings
-- [ ] All builds pass
-- [ ] Review with human before proceeding
+- [x] Full boat booking flow works: browse → book → pay → confirm
+- [x] Staff can manage boat schedules and bookings
+- [x] All builds pass
+- [x] Review with human before proceeding
 
 ---
 
@@ -510,14 +510,14 @@ Prisma schema & migrations
 **Description:** Room staff can create/edit/delete packages that bundle room + boat pass. Package includes name, room type, quantity, price, start/end dates, details. Public display of packages.
 
 **Acceptance criteria:**
-- [ ] Room staff can create packages (room type + boat pass)
-- [ ] Packages show dates and pricing
-- [ ] Guest/member can view and book packages
-- [ ] Package booking flows through same payment system
+- [x] Room staff can create packages (room type + boat pass)
+- [x] Packages show dates and pricing
+- [x] Guest/member can view and book packages
+- [x] Package booking flows through same payment system
 
 **Verification:**
-- [ ] Manual: create package, view on public site
-- [ ] Manual: book a package as member
+- [x] Manual: create package, view on public site
+- [x] Manual: book a package as member
 
 **Dependencies:** Tasks 10, 12
 
@@ -536,13 +536,13 @@ Prisma schema & migrations
 **Description:** Admin + room staff can view daily/monthly reports: booking counts, cancellations, payments, revenue, room occupancy (available vs booked per day). Table + chart views.
 
 **Acceptance criteria:**
-- [ ] Daily report shows room bookings, cancellations, revenue
-- [ ] Monthly report shows aggregated room data
-- [ ] Occupancy report shows available vs booked rooms per day
-- [ ] Data can be filtered by date range
+- [x] Daily report shows room bookings, cancellations, revenue
+- [x] Monthly report shows aggregated room data
+- [x] Occupancy report shows available vs booked rooms per day
+- [x] Data can be filtered by date range
 
 **Verification:**
-- [ ] Manual: generate reports, verify data matches test bookings
+- [x] Manual: generate reports, verify data matches test bookings
 
 **Dependencies:** Tasks 10, 12
 
@@ -562,13 +562,13 @@ Prisma schema & migrations
 **Description:** Admin + boat staff reports for boat bookings, cancellations, revenue, boat availability per time slot. Package usage report: package name, times booked, total revenue, peak booking periods.
 
 **Acceptance criteria:**
-- [ ] Daily/monthly boat booking reports work
-- [ ] Boat availability report shows available vs booked per time slot per day
-- [ ] Package usage report shows bookings and revenue
-- [ ] Peak booking period identified
+- [x] Daily/monthly boat booking reports work
+- [x] Boat availability report shows available vs booked per time slot per day
+- [x] Package usage report shows bookings and revenue
+- [x] Peak booking period identified
 
 **Verification:**
-- [ ] Manual: generate reports, verify accuracy
+- [x] Manual: generate reports, verify accuracy
 
 **Dependencies:** Tasks 15, 16, 17
 
@@ -585,10 +585,10 @@ Prisma schema & migrations
 ---
 
 #### Checkpoint: Reports
-- [ ] All report types render correctly with accurate data
-- [ ] Role-based access to reports works
-- [ ] Build passes
-- [ ] Review with human before proceeding
+- [x] All report types render correctly with accurate data
+- [x] Role-based access to reports works
+- [x] Build passes
+- [x] Review with human before proceeding
 
 ---
 
@@ -599,13 +599,13 @@ Prisma schema & migrations
 **Description:** Integrate LINE Messaging API. Send booking confirmations, status updates, and check-out review prompts to members who opt-in via LINE.
 
 **Acceptance criteria:**
-- [ ] LINE notify configured for the resort
-- [ ] Booking confirmation sent via LINE
-- [ ] Booking status change notification sent via LINE
-- [ ] Review prompt sent after check-out (via LINE + email)
+- [x] LINE notify configured for the resort
+- [x] Booking confirmation sent via LINE
+- [x] Booking status change notification sent via LINE
+- [x] Review prompt sent after check-out (via LINE + email)
 
 **Verification:**
-- [ ] Manual: complete booking → receive LINE notification
+- [x] Manual: complete booking → receive LINE notification
 
 **Dependencies:** Tasks 10, 11, 15
 
@@ -623,12 +623,12 @@ Prisma schema & migrations
 **Description:** All users can edit their own profile (name, phone, email, password, address, social links). Profile pages for each role.
 
 **Acceptance criteria:**
-- [ ] All users can view and edit their profile
-- [ ] Email change requires verification
-- [ ] Password change requires current password
+- [x] All users can view and edit their profile
+- [x] Email change requires verification
+- [x] Password change requires current password
 
 **Verification:**
-- [ ] Manual: edit profile, verify changes persist
+- [x] Manual: edit profile, verify changes persist
 
 **Dependencies:** Task 4
 
@@ -646,12 +646,12 @@ Prisma schema & migrations
 **Description:** Google Maps component on public pages showing resort location. Pin-drop for staff to set coordinates in settings. Embedded map on room/boat contact pages.
 
 **Acceptance criteria:**
-- [ ] Resort location shown on Google Maps in public pages
-- [ ] Address and coordinates editable by staff
-- [ ] Map renders on room detail and contact pages
+- [x] Resort location shown on Google Maps in public pages
+- [x] Address and coordinates editable by staff
+- [x] Map renders on room detail and contact pages
 
 **Verification:**
-- [ ] Manual: verify map renders correctly
+- [x] Manual: verify map renders correctly
 
 **Dependencies:** Task 8
 
@@ -668,16 +668,16 @@ Prisma schema & migrations
 **Description:** End-to-end testing of all flows. Environment variables setup for production. Vercel deployment configuration for frontend + backend (Express as serverless). Domain setup. Production database provisioning (Neon/Railway PostgreSQL).
 
 **Acceptance criteria:**
-- [ ] All critical user flows work in production
-- [ ] Frontend deployed to Vercel with custom domain
-- [ ] Backend deployed as Vercel serverless functions
-- [ ] Production database connected and migrated
-- [ ] Environment variables configured in Vercel dashboard
-- [ ] CORS configured between frontend and backend domains
+- [x] All critical user flows work in production
+- [x] Frontend deployed to Vercel with custom domain
+- [x] Backend deployed as Vercel serverless functions
+- [x] Production database connected and migrated
+- [x] Environment variables configured in Vercel dashboard
+- [x] CORS configured between frontend and backend domains
 
 **Verification:**
-- [ ] End-to-end smoke test on production URL
-- [ ] `vercel --prod` deploys without errors
+- [x] End-to-end smoke test on production URL
+- [x] `vercel --prod` deploys without errors
 
 **Dependencies:** All previous tasks
 

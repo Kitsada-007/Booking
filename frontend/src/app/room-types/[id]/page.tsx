@@ -55,6 +55,7 @@ export default function RoomTypeDetailPage(props: DetailPageProps) {
   }, [props.params]);
 
   if (loading) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-400">Loading...</div>;
+  if (error) return <div className="mx-auto max-w-3xl px-4 py-8 text-red-500">{error}</div>;
   if (!roomType) return <div className="mx-auto max-w-3xl px-4 py-8 text-zinc-500">Room type not found</div>;
 
   return (
