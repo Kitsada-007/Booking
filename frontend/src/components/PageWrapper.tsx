@@ -27,7 +27,7 @@ export function PageWrapper({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen flex-col bg-zinc-50/40 text-zinc-900 font-sans">
       {/* Top Banner (Agoda Style) */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-center py-2 px-4 text-xs font-semibold text-white tracking-wide">
-        ✨ Exclusive Member Rates: Sign up or log in to unlock up to 20% off your booking!
+        Exclusive Member Rates: Sign up or log in to unlock up to 20% off your booking!
       </div>
 
       {/* Main Header */}
@@ -316,11 +316,32 @@ export function PageWrapper({ children }: { children: React.ReactNode }) {
               <h3 className="text-sm font-semibold text-white tracking-wider uppercase mb-4">
                 Contact Resort
               </h3>
-              <ul className="space-y-2 text-sm text-zinc-500">
-                <li>📍 123 Beachfront Rd, Krabi, Thailand</li>
-                <li>✉️ contact@seasideresort.com</li>
-                <li>📞 +66 (0) 75-123456</li>
-                <li>⏰ Mon - Sun: 24/7 Front Desk</li>
+              <ul className="space-y-3 text-sm text-zinc-500">
+                <li className="flex items-start gap-2">
+                  <svg className="h-4 w-4 mt-0.5 shrink-0 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>123 Beachfront Rd, Krabi, Thailand</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg className="h-4 w-4 shrink-0 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <span>contact@seasideresort.com</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg className="h-4 w-4 shrink-0 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  <span>+66 (0) 75-123456</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg className="h-4 w-4 shrink-0 text-zinc-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>Mon - Sun: 24/7 Front Desk</span>
+                </li>
               </ul>
             </div>
           </div>
