@@ -1,12 +1,29 @@
 import { prisma } from '../../common/prisma';
 
-export async function getPayment(bookingId: string, bookingType: 'room' | 'boat') {
+export async function getPayment(
+  userId: string,
+  userRole: string,
+  bookingId: string,
+  bookingType: 'room' | 'boat'
+) {
   const where = bookingType === 'room'
     ? { roomBookingId: bookingId }
     : { boatBookingId: bookingId };
 
   const payment = await prisma.payment.findFirst({ where });
   if (!payment) throw new Error('Payment not found');
+
+  const isStaffOrAdmin = ['admin', 'room_staff', 'boat_staff'].includes(userRole);
+  if (!isStaffOrAdmin) {
+    if (bookingType === 'room') {
+      const booking = await prisma.roomBooking.findUnique({ where: { id: bookingId } });
+      if (!booking || booking.userId !== userId) throw new Error('Payment not found');
+    } else {
+      const booking = await prisma.boatBooking.findUnique({ where: { id: bookingId } });
+      if (!booking || booking.userId !== userId) throw new Error('Payment not found');
+    }
+  }
+
   return payment;
 }
 

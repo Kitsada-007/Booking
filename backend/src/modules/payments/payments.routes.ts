@@ -14,7 +14,12 @@ router.get('/:bookingId', requireAuth, async (req, res) => {
       res.status(400).json({ error: 'bookingType query param required (room or boat)', code: 'VALIDATION_ERROR' });
       return;
     }
-    const payment = await getPayment(req.params.bookingId as string, bookingType);
+    const payment = await getPayment(
+      req.user!.userId,
+      req.user!.role,
+      req.params.bookingId as string,
+      bookingType
+    );
     res.json(payment);
   } catch (error) {
     const msg = error instanceof Error ? error.message : 'Not found';
