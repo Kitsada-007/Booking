@@ -81,7 +81,7 @@ describe('AuthService.register', () => {
 
     const result: AuthResult = await register(input);
 
-    expect(mockBcrypt.hash).toHaveBeenCalledWith('password123', 10);
+    expect(mockBcrypt.hash).toHaveBeenCalledWith('password123', 12);
     expect(mockPrisma.user.create).toHaveBeenCalled();
     expect(result.user.email).toBe('test@example.com');
     expect(result.accessToken).toBeDefined();
@@ -234,7 +234,7 @@ describe('AuthService.resetPassword', () => {
 
     const result = await resetPassword({ email: 'test@example.com', otp: '123456', newPassword: 'newpass123' });
 
-    expect(mockBcrypt.hash).toHaveBeenCalledWith('newpass123', 10);
+    expect(mockBcrypt.hash).toHaveBeenCalledWith('newpass123', 12);
     expect(result).toBe('Password updated');
   });
 

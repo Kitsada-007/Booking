@@ -108,7 +108,7 @@ export async function resetPassword(input: { email: string; otp: string; newPass
     throw new Error('Invalid or expired OTP');
   }
 
-  const passwordHash = await bcrypt.hash(input.newPassword, 10);
+  const passwordHash = await bcrypt.hash(input.newPassword, 12);
 
   await prisma.user.update({
     where: { email: input.email },
@@ -182,7 +182,7 @@ export async function register(input: {
     throw new Error('Email already in use');
   }
 
-  const passwordHash = await bcrypt.hash(input.password, 10);
+  const passwordHash = await bcrypt.hash(input.password, 12);
 
   const user = await prisma.user.create({
     data: {

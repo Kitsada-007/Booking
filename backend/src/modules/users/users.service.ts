@@ -80,7 +80,7 @@ export async function createStaff(input: {
     throw new Error('Email already in use');
   }
 
-  const passwordHash = await bcrypt.hash(input.password, 10);
+  const passwordHash = await bcrypt.hash(input.password, 12);
   const user = await prisma.user.create({
     data: {
       email: input.email,
@@ -172,7 +172,7 @@ export async function changePassword(
     throw new Error('Current password is incorrect');
   }
 
-  const passwordHash = await bcrypt.hash(newPassword, 10);
+  const passwordHash = await bcrypt.hash(newPassword, 12);
   await prisma.user.update({
     where: { id: userId },
     data: { passwordHash },
