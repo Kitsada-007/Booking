@@ -17,10 +17,6 @@ const userSelect = {
   updatedAt: true,
 } as const;
 
-interface PaginationParams {
-  page?: number;
-  pageSize?: number;
-}
 
 interface PaginatedResult<T> {
   data: T[];

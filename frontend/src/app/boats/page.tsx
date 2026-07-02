@@ -74,25 +74,26 @@ function BoatsContent() {
       {/* Header */}
       <div className="mb-8 text-left">
         <h1 className="text-3xl font-extrabold tracking-tight text-zinc-900">Island Boat Excursions</h1>
-        <p className="text-zinc-500 mt-1">Explore Krabi's beautiful islands, snorkeling spots, and sunset views.</p>
+        <p className="text-zinc-500 mt-1">Explore Krabi&apos;s beautiful islands, snorkeling spots, and sunset views.</p>
       </div>
+
 
       {/* Date Search Widget */}
       <div className="bg-white rounded-2xl border border-zinc-200/60 p-4 shadow-sm mb-8 grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
         <div className="sm:col-span-2">
-          <label htmlFor="boatDateFilter" className="block text-xs font-bold text-zinc-500 uppercase mb-1.5">Select Travel Date</label>
+          <label htmlFor="boatDateFilter" className="block text-xs font-bold text-zinc-500 uppercase mb-1.5 tracking-wider">Select Travel Date</label>
           <input
             id="boatDateFilter"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full border border-zinc-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500 font-medium"
+            className="input input-bordered w-full font-medium"
           />
         </div>
         <div>
           <button
             onClick={() => setDate(date)}
-            className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow transition duration-150"
+            className="btn btn-primary w-full shadow hover:shadow-md transition duration-150"
           >
             Check Boat Availability
           </button>
@@ -100,8 +101,11 @@ function BoatsContent() {
       </div>
 
       {error && (
-        <div className="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-600">
-          ⚠️ {error}
+        <div className="alert alert-error mb-6 shadow-sm text-sm">
+          <svg className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>{error}</span>
         </div>
       )}
 
@@ -113,9 +117,11 @@ function BoatsContent() {
           ))}
         </div>
       ) : boatTypes.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-2xl border border-zinc-200/60 shadow-sm">
-          <span className="text-4xl">⛵</span>
-          <h3 className="mt-3 text-lg font-bold text-zinc-800">No boat excursions available</h3>
+        <div className="text-center py-16 bg-white rounded-2xl border border-zinc-200/60 shadow-sm flex flex-col items-center justify-center">
+          <svg className="h-12 w-12 text-zinc-400 mb-3 mx-auto" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21V3m0 3L5 10h7m0-7l7 7h-7m-7 4h14" />
+          </svg>
+          <h3 className="text-lg font-bold text-zinc-800">No boat excursions available</h3>
           <p className="text-zinc-500 text-sm mt-1">Try selecting a different date or checking back later.</p>
         </div>
       ) : (
@@ -138,11 +144,14 @@ function BoatsContent() {
                         fill
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute top-3 left-3 bg-blue-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      <div className="absolute top-3 left-3 badge badge-primary text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border-none">
                         ★ TOP CHOICE
                       </div>
-                      <div className="absolute bottom-3 right-3 bg-zinc-950/80 text-white text-xs font-semibold px-2 py-1 rounded backdrop-blur">
-                        ⏱ {bt.durationMinutes} mins
+                      <div className="absolute bottom-3 right-3 badge badge-neutral bg-zinc-950/80 text-white text-xs font-semibold px-2 py-3 rounded backdrop-blur flex items-center gap-1 border-none">
+                        <svg className="h-3.5 w-3.5 text-zinc-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{bt.durationMinutes} mins</span>
                       </div>
                     </div>
                   )}
@@ -164,14 +173,17 @@ function BoatsContent() {
                           {bt.timeSlots.map((ts) => (
                             <span
                               key={ts.id}
-                              className={`text-[10px] font-bold px-2 py-1 rounded-lg border transition ${
+                              className={`text-[10px] font-bold px-2 py-1 rounded-lg border transition flex items-center gap-1.5 ${
                                 ts.available > 0
                                   ? 'bg-blue-50/50 text-blue-600 border-blue-100 hover:bg-blue-50'
                                   : 'bg-zinc-50 text-zinc-400 border-zinc-100 cursor-not-allowed'
                               }`}
                               title={ts.available > 0 ? `${ts.available} spots left` : 'Fully booked'}
                             >
-                              🕒 {ts.startTime} - {ts.endTime}
+                              <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {ts.startTime} - {ts.endTime}
                             </span>
                           ))}
                         </div>
@@ -197,13 +209,13 @@ function BoatsContent() {
                   <div className="flex gap-1.5">
                     <Link
                       href={`/boats/${bt.id}`}
-                      className="px-3 py-2 border border-zinc-200 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300 rounded-xl transition text-center"
+                      className="btn btn-outline border-zinc-200 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300 rounded-xl transition text-center px-3 py-2 h-auto min-h-0"
                     >
                       Details
                     </Link>
                     <Link
                       href={`/book/boats?boatTypeId=${bt.id}`}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow hover:shadow-md transition text-center"
+                      className="btn btn-primary text-white font-bold rounded-xl text-xs shadow hover:shadow-md transition text-center px-4 py-2 h-auto min-h-0 border-none"
                     >
                       Book Tour
                     </Link>

@@ -33,10 +33,14 @@ export function ReviewForm({ roomTypeId, bookingId, onSuccess }: ReviewFormProps
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && <div className="rounded bg-zinc-100 p-3 text-sm text-zinc-700">{error}</div>}
+      {error && (
+        <div className="alert alert-error text-sm p-3 shadow-sm">
+          <span>{error}</span>
+        </div>
+      )}
 
       <div>
-        <label className="block text-sm font-medium mb-2">Rating</label>
+        <label className="block text-sm font-semibold text-zinc-700 mb-2">Rating</label>
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((star) => (
             <button
@@ -45,8 +49,8 @@ export function ReviewForm({ roomTypeId, bookingId, onSuccess }: ReviewFormProps
               onClick={() => setRating(star)}
               onMouseEnter={() => setHover(star)}
               onMouseLeave={() => setHover(0)}
-              className={`h-8 w-8 rounded text-lg ${
-                star <= (hover || rating) ? 'text-yellow-400' : 'text-zinc-300'
+              className={`h-8 w-8 rounded text-lg transition-transform hover:scale-110 ${
+                star <= (hover || rating) ? 'text-amber-500' : 'text-zinc-300'
               }`}
             >
               ★
@@ -56,13 +60,13 @@ export function ReviewForm({ roomTypeId, bookingId, onSuccess }: ReviewFormProps
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Comment (optional)</label>
+        <label className="block text-sm font-semibold text-zinc-700 mb-1">Comment (optional)</label>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={3}
           maxLength={500}
-          className="block w-full rounded border border-zinc-300 px-3 py-2 text-sm"
+          className="textarea textarea-bordered w-full text-sm block"
           placeholder="Share your experience..."
         />
       </div>
@@ -70,7 +74,7 @@ export function ReviewForm({ roomTypeId, bookingId, onSuccess }: ReviewFormProps
       <button
         type="submit"
         disabled={submitting}
-        className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+        className="btn btn-primary disabled:opacity-50"
       >
         {submitting ? 'Submitting...' : 'Submit review'}
       </button>

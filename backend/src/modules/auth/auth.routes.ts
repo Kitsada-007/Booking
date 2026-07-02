@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
 import { validate } from '../../common/middleware/validate';
+import { authRateLimiter } from '../../common/middleware/rate-limiter';
 import { register, login, refreshTokens, forgotPassword, resetPassword, googleLogin } from './auth.service';
 
 const router = Router();
@@ -18,7 +19,7 @@ const loginSchema = z.object({
   password: z.string().min(1),
 });
 
-router.post('/google', async (req, res) => {
+router.post('/google', authRateLimiter, async (req, res) => {
   try {
     const { googleToken } = req.body;
     if (!googleToken || typeof googleToken !== 'string') {
@@ -37,7 +38,7 @@ router.post('/google', async (req, res) => {
   }
 });
 
-router.post('/register', validate(registerSchema), async (req, res) => {
+router.post('/register', authRateLimiter, validate(registerSchema), async (req, res) => {
   try {
     const result = await register(req.body);
     res.status(201).json(result);
@@ -55,7 +56,7 @@ const refreshSchema = z.object({
   refreshToken: z.string().min(1),
 });
 
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', authRateLimiter, async (req, res) => {
   try {
     const { email } = req.body;
     if (!email || typeof email !== 'string') {
@@ -75,7 +76,7 @@ const resetPasswordSchema = z.object({
   newPassword: z.string().min(8),
 });
 
-router.post('/reset-password', validate(resetPasswordSchema), async (req, res) => {
+router.post('/reset-password', authRateLimiter, validate(resetPasswordSchema), async (req, res) => {
   try {
     const result = await resetPassword(req.body);
     res.json({ message: result });
@@ -103,7 +104,7 @@ router.post('/refresh', validate(refreshSchema), async (req, res) => {
   }
 });
 
-router.post('/login', validate(loginSchema), async (req, res) => {
+router.post('/login', authRateLimiter, validate(loginSchema), async (req, res) => {
   try {
     const result = await login(req.body);
     res.json(result);

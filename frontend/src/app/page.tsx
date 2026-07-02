@@ -43,7 +43,7 @@ export default function HomePage() {
         
         <div className="relative z-10 w-full max-w-4xl px-4 flex flex-col items-center">
           <div className="text-center text-white mb-8">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-zinc-950 uppercase tracking-wider mb-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500 text-zinc-950 uppercase tracking-wider mb-3 shadow-md">
               <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
               Winner of Luxury Beach Resort 2026
             </span>
@@ -56,26 +56,32 @@ export default function HomePage() {
           </div>
 
           {/* Agoda Style Booking Widget */}
-          <div className="w-full bg-white rounded-2xl shadow-xl shadow-zinc-950/20 p-1 md:p-2 border border-zinc-200/50">
+          <div className="w-full bg-white rounded-2xl shadow-xl shadow-zinc-950/20 p-2 border border-zinc-200/50">
             {/* Tabs */}
-            <div className="flex border-b border-zinc-100 p-2 gap-1">
+            <div role="tablist" className="tabs tabs-boxed bg-zinc-50/80 p-1 flex gap-1">
               <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === 'rooms'}
                 onClick={() => setActiveTab('rooms')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition ${
+                className={`tab flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition ${
                   activeTab === 'rooms'
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-zinc-600 hover:bg-zinc-50'
+                    ? 'tab-active bg-white text-blue-600 shadow'
+                    : 'text-zinc-600 hover:bg-zinc-100/50'
                 }`}
               >
                 <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 10V19M21 10V19M3 14H21M3 10H21M5 6H7V10H5V6ZM17 6H19V10H17V6Z"/></svg>
                 <span>Stay in Rooms</span>
               </button>
               <button
+                type="button"
+                role="tab"
+                aria-selected={activeTab === 'boats'}
                 onClick={() => setActiveTab('boats')}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition ${
+                className={`tab flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition ${
                   activeTab === 'boats'
-                    ? 'bg-blue-50 text-blue-600'
-                    : 'text-zinc-600 hover:bg-zinc-50'
+                    ? 'tab-active bg-white text-blue-600 shadow'
+                    : 'text-zinc-600 hover:bg-zinc-100/50'
                 }`}
               >
                 <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M2 17h20M12 2v15m0-15L5 9h7m0-7l7 7h-7"/></svg>
@@ -89,33 +95,33 @@ export default function HomePage() {
                 <>
                   {/* Destination (Disabled / Fixed for Resort) */}
                   <div className="md:col-span-5 text-left">
-                    <label className="block text-xs font-semibold text-zinc-500 uppercase mb-1.5">Destination</label>
-                    <div className="w-full border border-zinc-200 rounded-xl px-3.5 py-2.5 text-sm bg-zinc-50 font-medium text-zinc-800 flex items-center gap-2">
+                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-1.5 tracking-wider">Destination</label>
+                    <div className="w-full input input-bordered bg-zinc-50 font-medium text-zinc-800 flex items-center gap-2 cursor-not-allowed">
                       <svg className="h-4 w-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                      <span>Seaside Resort, Krabi (Beachfront)</span>
+                      <span className="truncate">Seaside Resort, Krabi</span>
                     </div>
                   </div>
 
                   {/* Check-In Date */}
                   <div className="md:col-span-4 text-left">
-                    <label htmlFor="checkInHero" className="block text-xs font-semibold text-zinc-500 uppercase mb-1.5">Check-in Date</label>
+                    <label htmlFor="checkInHero" className="block text-xs font-bold text-zinc-500 uppercase mb-1.5 tracking-wider">Check-in Date</label>
                     <input
                       id="checkInHero"
                       type="date"
                       value={checkIn}
                       onChange={(e) => setCheckIn(e.target.value)}
-                      className="w-full border border-zinc-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 font-medium"
+                      className="input input-bordered w-full font-medium"
                     />
                   </div>
 
                   {/* Guests */}
                   <div className="md:col-span-3 text-left">
-                    <label htmlFor="guestsHero" className="block text-xs font-semibold text-zinc-500 uppercase mb-1.5">Guests & Rooms</label>
+                    <label htmlFor="guestsHero" className="block text-xs font-bold text-zinc-500 uppercase mb-1.5 tracking-wider">Guests & Rooms</label>
                     <select
                       id="guestsHero"
                       value={guests}
                       onChange={(e) => setGuests(e.target.value)}
-                      className="w-full border border-zinc-200 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue-500 font-medium text-zinc-700 bg-white"
+                      className="select select-bordered w-full font-medium text-zinc-700 bg-white"
                     >
                       <option value="1">1 Guest</option>
                       <option value="2">2 Guests</option>
@@ -129,22 +135,22 @@ export default function HomePage() {
                 <>
                   {/* Destination */}
                   <div className="md:col-span-5 text-left">
-                    <label className="block text-xs font-semibold text-zinc-500 uppercase mb-1.5">Excursion Location</label>
-                    <div className="w-full border border-zinc-200 rounded-xl px-3.5 py-2.5 text-sm bg-zinc-50 font-medium text-zinc-800 flex items-center gap-2">
+                    <label className="block text-xs font-bold text-zinc-500 uppercase mb-1.5 tracking-wider">Excursion Location</label>
+                    <div className="w-full input input-bordered bg-zinc-50 font-medium text-zinc-800 flex items-center gap-2 cursor-not-allowed">
                       <svg className="h-4 w-4 text-zinc-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 10c2.5-1 5 1 7.5 0s5-2 7.5-1M3 15c2.5-1 5 1 7.5 0s5-2 7.5-1" /></svg>
-                      <span>Phi Phi & Hong Islands (Guided)</span>
+                      <span className="truncate">Phi Phi & Hong Islands</span>
                     </div>
                   </div>
 
                   {/* Boat Tour Date */}
                   <div className="md:col-span-7 text-left">
-                    <label htmlFor="boatDateHero" className="block text-xs font-semibold text-zinc-500 uppercase mb-1.5">Preferred Date</label>
+                    <label htmlFor="boatDateHero" className="block text-xs font-bold text-zinc-500 uppercase mb-1.5 tracking-wider">Preferred Date</label>
                     <input
                       id="boatDateHero"
                       type="date"
                       value={boatDate}
                       onChange={(e) => setBoatDate(e.target.value)}
-                      className="w-full border border-zinc-200 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-blue-500 font-medium"
+                      className="input input-bordered w-full font-medium"
                     />
                   </div>
                 </>
@@ -154,7 +160,7 @@ export default function HomePage() {
               <div className="md:col-span-12 mt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-xl text-base shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 transition duration-150"
+                  className="btn btn-primary w-full py-3.5 text-base font-bold shadow-md hover:shadow-lg transition duration-150"
                 >
                   Search Availability
                 </button>
@@ -231,7 +237,7 @@ export default function HomePage() {
 
       {/* Testimonials & Reviews Highlights */}
       <section className="mx-auto w-full max-w-6xl px-4 pb-16">
-        <div className="rounded-2xl bg-white border border-zinc-200/60 p-8 shadow-sm">
+        <div className="card bg-white border border-zinc-200/60 p-8 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 border-b border-zinc-100 pb-6">
             <div>
               <h3 className="text-2xl font-bold text-zinc-900">What Guests Say About Us</h3>
@@ -251,25 +257,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-zinc-50 p-5 rounded-xl text-left border border-zinc-100">
               <div className="text-amber-500 mb-2">★★★★★</div>
-              <p className="text-sm font-semibold text-zinc-800">"Absolute Paradise!"</p>
+              <p className="text-sm font-semibold text-zinc-800">&ldquo;Absolute Paradise!&rdquo;</p>
               <p className="text-xs text-zinc-500 leading-relaxed mt-2">
-                "The beachfront villa was steps from pristine sand. The staff replied instantly to all needs and boat tour was unforgettable."
+                &ldquo;The beachfront villa was steps from pristine sand. The staff replied instantly to all needs and boat tour was unforgettable.&rdquo;
               </p>
               <p className="text-xs font-medium text-zinc-400 mt-4">— Somchai S., Thailand</p>
             </div>
             <div className="bg-zinc-50 p-5 rounded-xl text-left border border-zinc-100">
               <div className="text-amber-500 mb-2">★★★★★</div>
-              <p className="text-sm font-semibold text-zinc-800">"Highly Recommend Packages"</p>
+              <p className="text-sm font-semibold text-zinc-800">&ldquo;Highly Recommend Packages&rdquo;</p>
               <p className="text-xs text-zinc-500 leading-relaxed mt-2">
-                "We booked the Room + Boat bundle. Super easy check-in, smooth operations. Breakfast was fantastic with gorgeous ocean views."
+                &ldquo;We booked the Room + Boat bundle. Super easy check-in, smooth operations. Breakfast was fantastic with gorgeous ocean views.&rdquo;
               </p>
               <p className="text-xs font-medium text-zinc-400 mt-4">— Jessica K., Singapore</p>
             </div>
             <div className="bg-zinc-50 p-5 rounded-xl text-left border border-zinc-100">
               <div className="text-amber-500 mb-2">★★★★★</div>
-              <p className="text-sm font-semibold text-zinc-800">"Best Service Ever"</p>
+              <p className="text-sm font-semibold text-zinc-800">&ldquo;Best Service Ever&rdquo;</p>
               <p className="text-xs text-zinc-500 leading-relaxed mt-2">
-                "Easy communication. We arrived late and check-in was seamless. Everything on the site was matching reality."
+                &ldquo;Easy communication. We arrived late and check-in was seamless. Everything on the site was matching reality.&rdquo;
               </p>
               <p className="text-xs font-medium text-zinc-400 mt-4">— David L., Germany</p>
             </div>
@@ -280,7 +286,7 @@ export default function HomePage() {
       {/* Promos Section */}
       <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-16 px-4 text-center">
         <div className="max-w-2xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-widest text-blue-200">Limited-Time Offer</span>
+          <span className="badge badge-secondary py-1 text-xs font-bold uppercase tracking-widest text-white">Limited-Time Offer</span>
           <h2 className="text-3xl font-extrabold mt-3">Unlock Instant Secret Deals</h2>
           <p className="text-blue-100 text-sm mt-3 leading-relaxed">
             Create a free Seaside Resort member account now and get immediate access to secret discounts, room upgrades, and priority boat check-in.
@@ -288,13 +294,13 @@ export default function HomePage() {
           <div className="mt-8 flex justify-center gap-4">
             <Link
               href="/register"
-              className="rounded-xl bg-white px-6 py-3.5 text-sm font-bold text-blue-700 hover:bg-zinc-100 shadow-lg shadow-black/10 transition"
+              className="btn btn-secondary border-none bg-white text-blue-700 hover:bg-zinc-100 shadow-lg shadow-black/10 px-6 py-3.5 text-sm font-bold transition"
             >
               Sign Up For Free
             </Link>
             <Link
               href="/login"
-              className="rounded-xl border border-white/30 px-6 py-3.5 text-sm font-bold text-white hover:bg-white/10 transition"
+              className="btn btn-outline border-white text-white hover:bg-white/10 hover:border-white/50 px-6 py-3.5 text-sm font-bold transition"
             >
               Log In
             </Link>
@@ -327,7 +333,7 @@ function Card({
   return (
     <Link
       href={href}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200/60 bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+      className="card card-bordered bg-base-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group"
     >
       <div className="relative h-64 overflow-hidden">
         <Image
@@ -338,7 +344,7 @@ function Card({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-80" />
         <div className="absolute top-4 left-4 flex gap-2">
-          <span className="bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+          <span className="badge badge-primary text-[10px] font-bold px-2.5 py-1 uppercase tracking-wider shadow border-none">
             {badge}
           </span>
         </div>

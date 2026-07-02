@@ -23,11 +23,11 @@ interface BoatBooking {
 }
 
 const statusColors: Record<string, string> = {
-  pending_payment: 'bg-zinc-100 text-zinc-600',
-  confirmed: 'bg-zinc-200 text-zinc-700',
-  checked_in: 'bg-zinc-300 text-zinc-800',
-  cancelled: 'bg-zinc-100 text-zinc-400 line-through',
-  completed: 'bg-zinc-800 text-white',
+  pending_payment: 'badge badge-neutral gap-1 border-none',
+  confirmed: 'badge badge-info gap-1 text-white border-none',
+  checked_in: 'badge badge-primary gap-1 border-none',
+  cancelled: 'badge badge-ghost opacity-60 line-through gap-1 border-none',
+  completed: 'badge badge-success text-white gap-1 border-none',
 };
 
 export default function MyBookingsPage() {
@@ -57,7 +57,7 @@ export default function MyBookingsPage() {
   if (!user) {
     return <div className="mx-auto max-w-3xl px-4 py-16 text-center">
       <h1 className="text-2xl font-bold mb-4">My Bookings</h1>
-      <Link href="/login?redirect=/my-bookings" className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">Sign in to view your bookings</Link>
+      <Link href="/login?redirect=/my-bookings" className="btn btn-primary">Sign in to view your bookings</Link>
     </div>;
   }
 
@@ -67,28 +67,28 @@ export default function MyBookingsPage() {
     <div className="mx-auto max-w-3xl px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">My Bookings</h1>
 
-      <div role="tablist" aria-label="Booking type" className="mb-6 flex gap-4 border-b border-zinc-200">
-        <button role="tab" aria-selected={tab === 'room'} aria-controls="room-bookings-panel" onClick={() => setTab('room')} className={`pb-2 text-sm font-medium ${tab === 'room' ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>Rooms</button>
-        <button role="tab" aria-selected={tab === 'boat'} aria-controls="boat-bookings-panel" onClick={() => setTab('boat')} className={`pb-2 text-sm font-medium ${tab === 'boat' ? 'border-b-2 border-zinc-900 text-zinc-900' : 'text-zinc-500'}`}>Boats</button>
+      <div role="tablist" aria-label="Booking type" className="tabs tabs-bordered mb-6">
+        <button role="tab" aria-selected={tab === 'room'} aria-controls="room-bookings-panel" onClick={() => setTab('room')} className={`tab font-semibold ${tab === 'room' ? 'tab-active' : 'text-zinc-500'}`}>Rooms</button>
+        <button role="tab" aria-selected={tab === 'boat'} aria-controls="boat-bookings-panel" onClick={() => setTab('boat')} className={`tab font-semibold ${tab === 'boat' ? 'tab-active' : 'text-zinc-500'}`}>Boats</button>
       </div>
 
       <div role="tabpanel" id={`${tab}-bookings-panel`} aria-label={`${tab} bookings`}>
-      {loading ? <p className="text-zinc-400">Loading...</p> : bookings.length === 0 ? (
+      {loading ? <p className="text-zinc-400 animate-pulse">Loading...</p> : bookings.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-zinc-500 mb-4">No {tab} bookings yet</p>
-          <Link href={tab === 'room' ? '/rooms' : '/boats'} className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
+          <Link href={tab === 'room' ? '/room-types' : '/boats'} className="btn btn-primary">
             Browse {tab === 'room' ? 'rooms' : 'boats'}
           </Link>
         </div>
       ) : (
         <div className="space-y-4">
           {bookings.map((b) => (
-            <div key={b.id} className="rounded border border-zinc-200 p-4">
+            <div key={b.id} className="card card-bordered bg-base-100 p-5 shadow-sm hover:shadow transition-shadow">
               <div className="flex items-start justify-between">
                 <div>
                   {b.type === 'room' ? (
                     <>
-                      <h2 className="font-semibold">{b.roomType.name}</h2>
+                      <h2 className="font-semibold text-lg text-zinc-900">{b.roomType.name}</h2>
                       <p className="text-sm text-zinc-500 mt-1">
                         {new Date(b.checkIn).toLocaleDateString()} — {new Date(b.checkOut).toLocaleDateString()}
                       </p>
@@ -96,21 +96,21 @@ export default function MyBookingsPage() {
                     </>
                   ) : (
                     <>
-                      <h2 className="font-semibold">{b.boatType.name}</h2>
+                      <h2 className="font-semibold text-lg text-zinc-900">{b.boatType.name}</h2>
                       <p className="text-sm text-zinc-500 mt-1">{new Date(b.date).toLocaleDateString()} · {b.timeSlot.startTime} — {b.timeSlot.endTime}</p>
                       <p className="text-sm text-zinc-500">{b.boatCount} boat(s) · {b.guestCount} guest(s)</p>
                     </>
                   )}
                 </div>
-                <div className="text-right">
-                  <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${statusColors[b.status] || ''}`}>
+                <div className="text-right flex flex-col items-end gap-1">
+                  <span className={`inline-flex px-2.5 py-3 text-xs font-bold rounded-lg ${statusColors[b.status] || ''}`}>
                     {b.status.replace(/_/g, ' ')}
                   </span>
-                  <p className="mt-1 text-sm font-medium">฿{b.totalPrice.toLocaleString()}</p>
+                  <p className="mt-1 text-sm font-semibold text-zinc-800">฿{b.totalPrice.toLocaleString()}</p>
                 </div>
               </div>
-              <div className="mt-3 flex gap-2">
-                <Link href={`/my-bookings/${b.id}?type=${b.type}`} className="text-sm text-zinc-600 hover:text-zinc-900">View details</Link>
+              <div className="mt-4 flex gap-3 border-t border-zinc-100 pt-3">
+                <Link href={`/my-bookings/${b.id}?type=${b.type}`} className="btn btn-ghost btn-xs text-zinc-500 hover:text-zinc-900 normal-case">View details</Link>
                 {b.status === 'pending_payment' && (
                   <button onClick={async () => {
                     if (confirm('Cancel this booking?')) {
@@ -123,7 +123,7 @@ export default function MyBookingsPage() {
                         }
                       } catch { /* ignore */ }
                     }
-                  }} className="text-sm text-zinc-600 hover:text-zinc-800">Cancel</button>
+                  }} className="btn btn-ghost btn-xs text-red-500 hover:text-red-700 normal-case">Cancel</button>
                 )}
               </div>
             </div>
